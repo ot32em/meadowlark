@@ -1,9 +1,10 @@
-// express server setup
+// steup: express server
 let expressMod = require('express');
 let app = expressMod();
 app.set('port', process.env.PORT || 3000);
 
-// view engine setup
+
+// setup: view engine
 let handlebarsMod = require('express3-handlebars');
 let handlebars = handlebarsMod.create(
 	{defaultLayout: 'main'}
@@ -33,6 +34,7 @@ app.use(function(req, res, next) {
 });
 
 app.use(function(err, req, res, next) {
+	console.error(err.stack);
 	res.render('500');
 });
 
