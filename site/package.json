@@ -15,5 +15,9 @@
     "minimatch": ">=3.0.2",
     "semver": ">=4.3.2",
     "uglify-js": ">=2.6.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0"
   }
 }
