@@ -12,6 +12,15 @@ let handlebars = handlebarsMod.create(
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
+
+// setup/local module: rolldice
+let rolldiceMod = require('./lib/rolldice.js')
+if(typeof rolldiceMode == 'undefined') {
+	console.error('rolldice can NOT be loaded');
+}
+
+
+
 // static
 app.use(expressMod.static(__dirname + '/public'));
 
@@ -21,10 +30,7 @@ app.get('/', function(req, res) {
 });
 
 app.get('/about', function(req, res) {
-	let numbers = [1,2,3,4,5,6];
-	let index = Math.floor(Math.random() * numbers.length);
-	let number = numbers[index];
-	res.render('about', {'dice': number});	
+	res.render('about', {'dice': rolldiceMod.rollDice()});	
 });
 
 
@@ -41,7 +47,7 @@ app.use(function(err, req, res, next) {
 
 app.listen(app.get('port'), function() {
 	console.log(
-		'Server(ch3-3) is up and listening port "'
+		'Server(ch4-1) is up and listening port "'
 		+ app.get('port')
 		+ '. Press ctrl+c to terminate server.');
 });
