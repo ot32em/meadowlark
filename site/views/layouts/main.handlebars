@@ -16,13 +16,14 @@
 		<script src="/vendor/mocha.js"></script>
 		<script src="/vendor/chai.js"></script>
 		<script>
-			mochi.ui('tdd');
+			mocha.ui('tdd');
 			let assert = chai.assert;
 		</script>
 		<script src="/qa/tests-global.js"></script>
 		{{#if pageTestScript}}
 			<script src="{{pageTestScript}}"></script>
 		{{/if}}
+		<script>mocha.run();</script>
 	{{/if}}
 </body>
 </html>
