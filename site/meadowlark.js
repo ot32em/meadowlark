@@ -39,7 +39,10 @@ app.get('/', function(req, res) {
 });
 
 app.get('/about', function(req, res) {
-	res.render('about', {'dice': rolldiceMod.rollDice()});	
+	res.render('about', {
+		'dice': rolldiceMod.rollDice(),
+		'pageTestScript': '/qa/tests-about.js'
+	});
 });
 
 
