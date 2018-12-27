@@ -14,7 +14,7 @@ app.set('view engine', 'handlebars');
 
 
 // setup/local module: rolldice
-let rolldiceMod = require('./lib/rolldice.js')
+let rolldiceMod = require('./lib/rolldice.js');
 if(typeof rolldiceMod == 'undefined') {
 	console.error('rolldice can NOT be loaded');
 }
@@ -31,7 +31,7 @@ app.use(function(req, res, next) {
 	else
 		res.locals.showTests = false;
 	next();
-})
+});
 
 // route setup
 app.get('/', function(req, res) {
@@ -68,7 +68,7 @@ app.use(function(err, req, res, next) {
 
 app.listen(app.get('port'), function() {
 	console.log(
-		'Server(ch5-1) is up and listening port "'
-		+ app.get('port')
-		+ '. Press ctrl+c to terminate server.');
+		'Server(ch5-1) is up and listening port "'+
+		app.get('port') +
+		'. Press ctrl+c to terminate server.');
 });
