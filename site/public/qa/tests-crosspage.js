@@ -1,58 +1,63 @@
-let browserMod = require('zombie');
+let { Builder, By, Key, until } = require('selenium-webdriver');
+let chrome = require('selenium-webdriver/chrome');
 let assert = require('chai').assert;
 
+
+let chromeOptions = new chrome.Options();
+chromeOptions.addArguments('--disable-gpu');
+chromeOptions.addArguments('--headless');
+
+// @type {WebDriver}
 let browser;
 
 suite('Crosspage Tests', function(){
     setup(function(){
-        browser = new browserMod();
+         browser = new Builder()
+                .forBrowser('chrome')
+                .setChromeOptions(chromeOptions)
+                .build();
+    });
+
+    teardown(function(){
+        browser.quit();
+        browser = undefined;
     });
 
     test('requesting group rate from hood river tour page should populate the referred field.',
         function(done){
             let referrer = 'http://localhost:3000/tours/hood-river';
-            browser.visit(referrer, function(){
-                browser.clickLink('.requestGroupRate', function(){
-                    console.log('browser: [' + browser + ']');
-                    console.log('browser.field(name): [' + browser.field('name') + ']');
-                    console.log('browser.field(referrer): [' + browser.field('referrer') + ']');
-                    for (const key in browser.field('referrer')) {
-                        console.log('browser.field(referrer): key: [' +key + ']');
 
-                        if (object.hasOwnProperty(key)) {
-                            const element = object[key];
-                            console.log('browser.field(referrer): element: [' + element + ']');
-                        }
-                        else
-                        {
-                            console.log('browser.field(referrer): no element');
-                        }
-                    }
-                    console.log('browser.field(referrer).value: [' + browser.field('referrer').value + ']');
-                    console.log('value: [' + browser.field('name').value + ']');
-                    assert(browser.field('referrer').value === referrer)                    
-                    done();
-                });
-            });
+            (async () => {
+                await browser.get(referrer);
+                await browser.findElement(By.className('requestGroupRate')).click();
+
+                let referrerValue = await browser.findElement(By.name('referrer')).getAttribute('value');
+                assert(referrerValue === referrer);
+                done();
+            })();
     });
 
     test('requesting group rate from taipei tour page should populate the referred field',
         function(done){
             let referrer = 'http://localhost:3000/tours/taipei';
-            browser.visit(referrer, function(){
-                browser.clickLink('.requestGroupRate', function(){
-                    assert(browser.field('referrer').value === referrer);
-                    done();
-                });
-            });
+            (async () => {
+                await browser.get(referrer);
+                await browser.findElement(By.className('requestGroupRate')).click();
+
+                let referrerValue = await browser.findElement(By.name('referrer')).getAttribute('value');
+                assert(referrerValue === referrer);
+                done();
+            })().catch ( (reason) => {} );
     });
 
     test('requesting group rate directly should result in an empty referred field',
         function(done){
             let url = 'http://localhost:3000/tours/request-group-rate';
-            browser.visit(url, function(){
-                assert(browser.field('referrer').value === '');
+            (async () => {
+                await browser.get(url);
+                let referrerValue = await browser.findElement(By.name('referrer')).getAttribute('value');
+                assert(referrerValue === '');
                 done();
-            });
+            })();
     });
 });
