@@ -12,6 +12,7 @@
     "express": "^4.16.4",
     "express3-handlebars": "^0.5.2",
     "handlebars": "^4.0.12",
+    "jshint": "^2.9.7",
     "minimatch": ">=3.0.2",
     "semver": ">=4.3.2",
     "uglify-js": ">=2.6.0"
@@ -19,6 +20,7 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "chromedriver": "^2.45.0",
+    "grunt": "^1.0.3",
     "grunt-cafe-mocha": "^0.1.13",
     "grunt-contrib-jshint": "^2.0.0",
     "grunt-exec": "^3.0.0",
