@@ -42,6 +42,20 @@ app.get('/header', function(req, res) {
 	res.set('Content-Type', 'text/plain');	
 	let s = '';
 	for(let n in req.headers) s += n + ': ' + req.headers[n] + '\n';
+
+	s += [
+		`ip: ${req.ip}`,
+		`method: ${req.method}`,
+		`originalUrl: ${req.originalUrl}`,
+		`protocol: ${req.protocol}`,
+		`query: ${req.query}`,
+		`secure: ${req.secure}`,
+		`statusCode: ${req.statusCode}`,
+		`url: ${req.url}`,
+		`xhr: ${req.xhr}`,
+	].join('\n');
+	
+	s += '\n';
 	res.send(s);
 });
 
