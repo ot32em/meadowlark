@@ -38,6 +38,13 @@ app.get('/', function(req, res) {
 	res.render('home');
 });
 
+app.get('/header', function(req, res) {
+	res.set('Content-Type', 'text/plain');	
+	let s = '';
+	for(let n in req.headers) s += n + ': ' + req.headers[n] + '\n';
+	res.send(s);
+});
+
 app.get('/about', function(req, res) {
 	res.render('about', {
 		'dice': rolldiceMod.rollDice(),
