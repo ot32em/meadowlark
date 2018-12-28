@@ -62,3 +62,5 @@ typings/
 
 # notepad++ backup files
 *.bak
+
+chromedriver.exe
