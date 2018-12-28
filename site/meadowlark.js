@@ -70,8 +70,5 @@ app.use(function(err, req, res, next) {
 
 
 app.listen(app.get('port'), function() {
-	console.log(
-		'Server(ch5-1) is up and listening port "'+
-		app.get('port') +
-		'. Press ctrl+c to terminate server.');
+	console.log(`Server is up. Port: ${ app.get("port") }. Press ctrl + c to close`);
 });
