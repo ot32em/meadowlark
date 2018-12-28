@@ -1,5 +1,6 @@
 let { Builder, By, Key, until } = require('selenium-webdriver');
 let chrome = require('selenium-webdriver/chrome');
+//let { suite, test} = require('mocha');
 let assert = require('chai').assert;
 
 
@@ -26,38 +27,42 @@ suite('Crosspage Tests', function(){
     test('requesting group rate from hood river tour page should populate the referred field.',
         function(done){
             let referrer = 'http://localhost:3000/tours/hood-river';
-
-            (async () => {
-                await browser.get(referrer);
-                await browser.findElement(By.className('requestGroupRate')).click();
-
-                let referrerValue = await browser.findElement(By.name('referrer')).getAttribute('value');
-                assert(referrerValue === referrer);
+            browser.get(referrer).then( _ => {
+                console.log('get(referrer)');
                 done();
-            })();
+                return browser.findElement(By.className('requestGroupRate')).click();
+            }).then( _ => {
+                console.log('findElement(.requestGroupRate)');
+                return browser.findElement(By.name('referrer')).getAttribute('value');
+            }).then( referrerVal => {
+                console.log('findElement(.referrer)');
+                console.log(referrerVal);
+                assert(referrerVal === referrer);
+                done();
+            }).catch( e => {});
     });
 
     test('requesting group rate from taipei tour page should populate the referred field',
         function(done){
             let referrer = 'http://localhost:3000/tours/taipei';
-            (async () => {
-                await browser.get(referrer);
-                await browser.findElement(By.className('requestGroupRate')).click();
-
-                let referrerValue = await browser.findElement(By.name('referrer')).getAttribute('value');
-                assert(referrerValue === referrer);
+            browser.get(referrer).then( _ => {
+                return browser.findElement(By.className('requestGroupRate')).click();
+            }).then( _ => {
+                return browser.findElement(By.name('referrer')).getAttribute('value');
+            }).then( referrerVal => {
+                assert(referrerVal === referrer);
                 done();
-            })().catch ( (reason) => {} );
+            }).catch ( e => {} );
     });
 
     test('requesting group rate directly should result in an empty referred field',
         function(done){
             let url = 'http://localhost:3000/tours/request-group-rate';
-            (async () => {
-                await browser.get(url);
-                let referrerValue = await browser.findElement(By.name('referrer')).getAttribute('value');
-                assert(referrerValue === '');
+            browser.get(url).then( _ => {
+                return browser.findElement(By.name('referrer')).getAttribute('value');
+            }).then( referrerVal => {
+                assert(referrerVal === '');
                 done();
-            })();
+            }).catch ( e => {} );
     });
 });
