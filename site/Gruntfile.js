@@ -15,14 +15,19 @@ module.exports = function(grunt) {
         },
         jshint: {
             app: ['meadowlark.js', 'public/js/**/*.js', 'lib/**/*.js'],
-            qa: ['gruntfile.js', 'public/qa/**/*.js', 'qa/**/*.js'],            
+            qa: ['gruntfile.js', 'public/qa/**/*.js', 'qa/**/*.js'],
+            options: { jshintrc: true, }, 
         },
         exec: {
             linkchecker: { cmd: 'linkchecker http://localhost:3000'}
         },
     });
 
-    grunt.registerTask('default', ['cafemocha', 'jshint', 'exec']);
+    grunt.registerTask('default', [
+        'jshint',
+        'cafemocha',
+        'exec',
+    ]);
 };
 
     
