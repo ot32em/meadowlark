@@ -64,3 +64,5 @@ typings/
 *.bak
 
 chromedriver.exe
+
+.vscode/
