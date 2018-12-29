@@ -79,6 +79,41 @@ app.get('/error', function(req, res) {
 	});
 });
 
+app.get('/api/tours', function(req, res) {
+	const tours = [
+		{ id: 0, name: 'Hood River', price: 99.99},
+		{ id: 1, name: 'Taipei', price: 149.99},
+	];
+	const toursXml = (tours) => {
+		return '<?xml version="1.0"?>\n\t<tours>\n' +
+				tours.map( (t) => `\t\t<tour id="${t.id}" price="${t.price}">${t.name}</tour>\n`).join('') +
+				'\t<tours>\n</xml>';
+	};
+	const toursTxt = (tours) => tours.map( (t) => `${t.id}: ${t.name} (${t.price})\n`).join('');
+
+	res.format({
+		'application/json': function(){
+			console.log('application/json');
+			res.json(tours);
+		},
+		'application/xml': function(){
+			console.log('application/xml');
+			res.type('application/xml');
+			res.send(toursXml(tours));
+		},
+		'text/xml': function() {
+			console.log('text/xml');
+			res.type('text/xml');
+			res.send(toursXml(tours));
+		},
+		'text/plain': function(){
+			console.log('text/plain');
+			res.type('text/plain');
+			res.send(toursTxt(tours));
+		},
+	});
+});
+
 
 // route setup :: rest 404 and 500, routed to middleware
 app.use(function(req, res, next) {
