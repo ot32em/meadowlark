@@ -1,3 +1,6 @@
+// setup: common require
+let util = require('util');
+
 // steup: express server
 let expressMod = require('express');
 let app = expressMod();
@@ -43,19 +46,9 @@ app.get('/header', function(req, res) {
 	let s = '';
 	for(let n in req.headers) s += n + ': ' + req.headers[n] + '\n';
 
-	s += [
-		`ip: ${req.ip}`,
-		`method: ${req.method}`,
-		`originalUrl: ${req.originalUrl}`,
-		`protocol: ${req.protocol}`,
-		`query: ${req.query}`,
-		`secure: ${req.secure}`,
-		`statusCode: ${req.statusCode}`,
-		`url: ${req.url}`,
-		`xhr: ${req.xhr}`,
-	].join('\n');
-	
-	s += '\n';
+	s += 'req';
+	s += util.inspect(req, false, 4);
+
 	res.send(s);
 });
 
