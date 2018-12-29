@@ -71,6 +71,14 @@ app.get('/tours/request-group-rate', function(req, res) {
 });
 
 
+// ch06 examples
+
+app.get('/error', function(req, res) {
+	res.status(500).render('error', {
+		err: '....err....',
+	});
+});
+
 
 // route setup :: rest 404 and 500, routed to middleware
 app.use(function(req, res, next) {
