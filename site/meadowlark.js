@@ -79,11 +79,13 @@ app.get('/error', function(req, res) {
 	});
 });
 
+
+const tours = [
+	{ id: 0, name: 'Hood River', price: 99.99},
+	{ id: 1, name: 'Taipei', price: 149.99},
+];
+
 app.get('/api/tours', function(req, res) {
-	const tours = [
-		{ id: 0, name: 'Hood River', price: 99.99},
-		{ id: 1, name: 'Taipei', price: 149.99},
-	];
 	const toursXml = (tours) => {
 		return '<?xml version="1.0"?>\n\t<tours>\n' +
 				tours.map( (t) => `\t\t<tour id="${t.id}" price="${t.price}">${t.name}</tour>\n`).join('') +
@@ -112,6 +114,27 @@ app.get('/api/tours', function(req, res) {
 			res.send(toursTxt(tours));
 		},
 	});
+});
+
+app.put('/api/tour/:id', function(req, res) {
+	let tourFound = tours.find( (tour) => tour.id == req.params.id);
+	if(tourfound) {
+		if(req.query.name) tourFound.name = req.query.name;
+		if(req.query.price) tourFound.price = req.query.price;
+		res.json({success: true});
+	} else {
+		res.json({error: 'No such tour exists.'});
+	}
+});
+
+app.delete('/api/tour/:id', function(req, res) {
+	let idxToDelete = tours.findIndex( (tour) => tour.id == req.params.id);
+	if(idxToDelete != -1) {
+		// delete array...
+		res.json({'success': true});
+	} else {
+		res.json({'error': 'no such item to delete'});
+	}
 });
 
 
