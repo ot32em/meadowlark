@@ -138,6 +138,20 @@ app.delete('/api/tour/:id', function(req, res) {
 });
 
 
+const toursIndex = {
+	currency: {
+		name: 'United States dollars',
+		abbrev: 'USD',
+	},
+	tours: tours,
+	specialsUrl: '/january-specials',
+	currencies: [' USD', 'GBP', 'BTC'],
+};
+
+app.get('/tours', function(req, res) {
+	res.render('tours/tours', toursIndex);
+});
+
 // route setup :: rest 404 and 500, routed to middleware
 app.use(function(req, res, next) {
 	res.render('404');	
