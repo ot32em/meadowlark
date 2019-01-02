@@ -10,7 +10,7 @@ app.set('port', process.env.PORT || 3000);
 // setup: view engine
 let handlebarsMod = require('express3-handlebars');
 let handlebars = handlebarsMod.create(
-	{defaultLayout: 'main'}
+	{defaultLayout: 'mainNav'}
 );
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
@@ -23,11 +23,10 @@ if(typeof rolldiceMod == 'undefined') {
 }
 
 
-// static
+// middleware: static resource
 app.use(expressMod.static(__dirname + '/public'));
 
-
-// route setup :: QA
+// middleware: QA data
 app.use(function(req, res, next) {
 	if( req.query.test === '1' && app.get('env') !== 'production')
 		res.locals.showTests = true;
@@ -38,9 +37,7 @@ app.use(function(req, res, next) {
 
 // route setup
 app.get('/', function(req, res) {
-	res.render('home', {
-		layout: 'navMain'
-	});
+	res.render('home');
 });
 
 app.get('/header', function(req, res) {
