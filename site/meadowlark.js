@@ -194,6 +194,18 @@ app.get('/jqueryTest', function(req, res){
 	});
 })
 
+app.get('/nursery-rhyme', function(req, res) {
+	res.render('nursery-rhyme', {'layout': 'mainUseSection'});
+});
+app.get('/data/nursery-rhyme', function(req, res) {
+	res.json({
+		'animal': 'squirrel',
+		'bodyPart': 'tail',
+		'adjective': 'bushy',
+		'noun': 'heck',
+	});
+});
+
 // route setup :: rest 404 and 500, routed to middleware
 app.use(function(req, res, next) {
 	res.render('404');	
