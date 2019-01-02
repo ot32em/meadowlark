@@ -12,6 +12,9 @@ let handlebarsMod = require('express3-handlebars');
 let handlebars = handlebarsMod.create(
 	{defaultLayout: 'mainNav'}
 );
+let handlebarsSectionMod = require('express-handlebars-sections');
+handlebarsSectionMod(handlebars);
+
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
@@ -184,6 +187,12 @@ const toursIndex = {
 app.get('/tours', function(req, res) {
 	res.render('tours/tours', toursIndex);
 });
+
+app.get('/jqueryTest', function(req, res){
+	res.render('jquerytest', {
+		'layout': 'mainUseSection'
+	});
+})
 
 // route setup :: rest 404 and 500, routed to middleware
 app.use(function(req, res, next) {
