@@ -38,7 +38,9 @@ app.use(function(req, res, next) {
 
 // route setup
 app.get('/', function(req, res) {
-	res.render('home');
+	res.render('home', {
+		layout: 'navMain'
+	});
 });
 
 app.get('/header', function(req, res) {
