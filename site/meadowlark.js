@@ -35,6 +35,40 @@ app.use(function(req, res, next) {
 	next();
 });
 
+// middleware: weather widget
+function getWeatherData() {
+	return {
+		"locations": [
+			{
+				"name": "台北",
+				"forecastUrl": "https://www.wunderground.com/weather/tw/taipei",
+				"iconUrl": "https://icons.wxug.com/i/c/v4/9.svg",
+				"weather": "多雲有雨",
+			},
+			{
+				"name": "台南",
+				"forecastUrl": "https://www.wunderground.com/weather/tw/tainan",
+				"iconUrl": "https://icons.wxug.com/i/c/v4/26.svg",
+				"weather": "多雲",
+			},
+			{
+				"name": "高雄市",
+				"forecastUrl": "https://www.wunderground.com/weather/tw/kaohsiung-city",
+				"iconUrl": "https://icons.wxug.com/i/c/v4/9.svg",
+				"weather": "多雲有雨",
+			},
+		],
+	};
+}
+
+app.use(function(req, res, next) {
+	if(!res.locals.partials) res.locals.partials = {};
+	res.locals.partials.weather = getWeatherData();
+	next();
+});
+
+
+
 // route setup
 app.get('/', function(req, res) {
 	res.render('home');
