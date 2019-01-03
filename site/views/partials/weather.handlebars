@@ -2,9 +2,10 @@
     <ul>
     {{#each partials.weather.locations}}
         <li class="location">
-            {{name}}
+            {{name}}: 
             <a href="{{forecastUrl}}">
-                <img src="{{iconUrl}}" alt="{{weather}}" width="42" height="42" /> {{weather}}, {{temp}}
+                {{weather}}, {{temp}}
+                <img src="{{iconUrl}}" alt="{{weather}}" width="14" height="14" /> 
             </a>
         </li>
     {{/each}}
