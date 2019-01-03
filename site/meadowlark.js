@@ -178,7 +178,8 @@ let bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({'extended': true}));
 app.get('/newsletter', function(req, res) {
 	res.render('newsletter', {
-		'csrf': 'Dummy crtf value'
+		'csrf': 'Dummy crtf value',
+		'enableAjaxSubmit': true,
 	});
 });
 
