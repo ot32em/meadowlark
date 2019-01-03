@@ -188,7 +188,13 @@ app.post('/process', function(req, res) {
 	console.log(`Email: ${req.body.email}`);
 	console.log(`crtf value: ${req.body._csrf}`);
 
-	res.redirect(303, '/thank-you');
+	if(req.xhr || req.accepts('json,html') === 'json') {
+		console.log('json call');
+		res.json({'success': true});
+	} else {
+		console.log('html call');
+		res.redirect(303, '/thank-you');
+	}
 });
 app.get('/thank-you', function(req, res) {
 	res.render('thank-you', {'msg': 'Email reigstered!'});
