@@ -84,7 +84,7 @@ app.get('/tours/request-group-rate', function(req, res) {
 
 // ch06 examples - request and response
 app.get('/error', function(req, res) {
-	res.status(500).render('error', {
+	res.status(500).render('playground/error', {
 		err: '....err....',
 	});
 });
@@ -158,7 +158,7 @@ app.get('/tours', function(req, res) {
 
 // ch07 example: handlebars: section
 app.get('/jqueryTest', function(req, res){
-	res.render('jquerytest');
+	res.render('playground/jquerytest');
 });
 
 app.get('/nursery-rhyme', function(req, res) {
