@@ -19,15 +19,14 @@ app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
 
-// setup/local module: rolldice
+// setup local module: rolldice
 let rolldiceMod = require('./lib/rolldice.js');
-if(typeof rolldiceMod == 'undefined') {
-	console.error('rolldice can NOT be loaded');
-}
+let testdata = require('./lib/data.js');
 
 
 // middleware: static resource
 app.use(expressMod.static(__dirname + '/public'));
+
 
 // middleware: QA data
 app.use(function(req, res, next) {
@@ -38,35 +37,11 @@ app.use(function(req, res, next) {
 	next();
 });
 
-// middleware: weather widget
-function getWeatherData() {
-	return {
-		"locations": [
-			{
-				"name": "台北",
-				"forecastUrl": "https://www.wunderground.com/weather/tw/taipei",
-				"iconUrl": "https://icons.wxug.com/i/c/v4/9.svg",
-				"weather": "多雲有雨",
-			},
-			{
-				"name": "台南",
-				"forecastUrl": "https://www.wunderground.com/weather/tw/tainan",
-				"iconUrl": "https://icons.wxug.com/i/c/v4/26.svg",
-				"weather": "多雲",
-			},
-			{
-				"name": "高雄市",
-				"forecastUrl": "https://www.wunderground.com/weather/tw/kaohsiung-city",
-				"iconUrl": "https://icons.wxug.com/i/c/v4/9.svg",
-				"weather": "多雲有雨",
-			},
-		],
-	};
-}
 
+// middleware: weather widget
 app.use(function(req, res, next) {
 	if(!res.locals.partials) res.locals.partials = {};
-	res.locals.partials.weather = getWeatherData();
+	res.locals.partials.weather = testdata.weather;
 	next();
 });
 
@@ -116,10 +91,6 @@ app.get('/error', function(req, res) {
 });
 
 
-const tours = [
-	{ id: 0, name: 'Hood River', price: 99.99},
-	{ id: 1, name: 'Taipei', price: 149.99},
-];
 
 app.get('/api/tours', function(req, res) {
 	const toursXml = (tours) => {
@@ -179,7 +150,7 @@ const toursIndex = {
 		name: 'United States dollars',
 		abbrev: 'USD',
 	},
-	tours: tours,
+	tours: testdata.tours,
 	specialsUrl: '/january-specials',
 	currencies: [' USD', 'GBP', 'BTC'],
 };
@@ -192,7 +163,7 @@ app.get('/jqueryTest', function(req, res){
 	res.render('jquerytest', {
 		'layout': 'mainUseSection'
 	});
-})
+});
 
 app.get('/nursery-rhyme', function(req, res) {
 	res.render('nursery-rhyme', {'layout': 'mainUseSection'});
@@ -205,6 +176,7 @@ app.get('/data/nursery-rhyme', function(req, res) {
 		'noun': 'heck',
 	});
 });
+
 
 // route setup :: rest 404 and 500, routed to middleware
 app.use(function(req, res, next) {
