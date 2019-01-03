@@ -53,14 +53,14 @@ app.get('/', function(req, res) {
 });
 
 app.get('/header', function(req, res) {
-	res.set('Content-Type', 'text/plain');	
-	let s = '';
-	for(let n in req.headers) s += n + ': ' + req.headers[n] + '\n';
+	let s = Object.keys(req.headers).map( k => k + ': ' + req.headers[k] + '\n').join('');
+	res.render('playground/dump', {'text': s});
+});
 
-	s += 'req';
-	s += util.inspect(req, false, 4);
-
-	res.send(s);
+app.get('/header-inspect/:level?', function(req, res) {
+	let level = req.params.level || 1;
+	let s = util.inspect(req, false, level);
+	res.render('playground/dump', {'text': s });
 });
 
 app.get('/about', function(req, res) {
