@@ -14,16 +14,24 @@
         <ul>
             <li><a href="/">Home</a></li>
             <li><a href="/about">About</a></li>
+            <li><a href="/tours">Tours</a></li>
+            <ul>
+                <li><a href="/tours/hood-river">Hood River</a></li>
+                <li><a href="/tours/taipei">Taipei</a></li>
+                <li><a href="/tours/request-group-rate">Request Group Rate</a></li>
+            </ul>
+            <li><a href="/nursery-rhyme">Nursery Rhyme</a></li>
         </ul>
     </div>
+
+
+    {{{body}}}
+
 
     <div>
         <h3>Weather Widget</h3>
         {{> weather}}
     </div>
-
-    {{{body}}}
-
     <footer>Maedowlark &copy; 2018-2019</footer>
 
     {{#if showTests}}
