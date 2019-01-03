@@ -82,15 +82,12 @@ app.get('/tours/request-group-rate', function(req, res) {
 });
 
 
-// ch06 examples
-
+// ch06 examples - request and response
 app.get('/error', function(req, res) {
 	res.status(500).render('error', {
 		err: '....err....',
 	});
 });
-
-
 
 app.get('/api/tours', function(req, res) {
 	const toursXml = (tours) => {
@@ -144,21 +141,22 @@ app.delete('/api/tour/:id', function(req, res) {
 	}
 });
 
-
-const toursIndex = {
-	currency: {
-		name: 'United States dollars',
-		abbrev: 'USD',
-	},
-	tours: testdata.tours,
-	specialsUrl: '/january-specials',
-	currencies: [' USD', 'GBP', 'BTC'],
-};
-
+// ch07 example: handlebars
 app.get('/tours', function(req, res) {
+	const toursIndex = {
+		currency: {
+			name: 'United States dollars',
+			abbrev: 'USD',
+		},
+		tours: testdata.tours,
+		specialsUrl: '/january-specials',
+		currencies: [' USD', 'GBP', 'BTC'],
+	};
 	res.render('tours/tours', toursIndex);
 });
 
+
+// ch07 example: handlebars: section
 app.get('/jqueryTest', function(req, res){
 	res.render('jquerytest', {
 		'layout': 'mainUseSection'
