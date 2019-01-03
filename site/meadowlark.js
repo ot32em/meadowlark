@@ -175,6 +175,27 @@ app.get('/data/nursery-rhyme', function(req, res) {
 	});
 });
 
+// ch08 form
+let bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({'extended': true}));
+app.get('/newsletter', function(req, res) {
+	res.render('newsletter', {
+		'csrf': 'Dummy crtf value'
+	});
+});
+
+app.post('/process', function(req, res) {
+	console.log(`Form type: ${req.query.form}`);
+	console.log(`Name: ${req.body.name}`);
+	console.log(`Email: ${req.body.email}`);
+	console.log(`crtf value: ${req.body._csrf}`);
+
+	res.redirect(303, '/thank-you');
+});
+app.get('/thank-you', function(req, res) {
+	res.render('thank-you', {'msg': 'Email reigstered!'});
+});
+
 
 // route setup :: rest 404 and 500, routed to middleware
 app.use(function(req, res, next) {
