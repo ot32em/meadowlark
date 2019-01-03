@@ -158,13 +158,11 @@ app.get('/tours', function(req, res) {
 
 // ch07 example: handlebars: section
 app.get('/jqueryTest', function(req, res){
-	res.render('jquerytest', {
-		'layout': 'mainUseSection'
-	});
+	res.render('jquerytest');
 });
 
 app.get('/nursery-rhyme', function(req, res) {
-	res.render('nursery-rhyme', {'layout': 'mainUseSection'});
+	res.render('nursery-rhyme');
 });
 app.get('/data/nursery-rhyme', function(req, res) {
 	res.json({
