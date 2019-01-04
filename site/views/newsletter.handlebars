@@ -1,24 +1,57 @@
-<h2>登記電子郵件來接收最近的優惠與新聞</h2>
-<form class="form-horizontal" role="form"
-      action="/process?form=newsletter"
-      method="POST">
+<div class="formContainer">
+    <h2>登記電子郵件來接收最近的優惠與新聞</h2>
+    <form class="form-horizontal newsletterForm" role="form"
+        action="/process?form=newsletter"
+        method="POST">
 
-    <input type="hidden" name="_csrf" value="{{csrf}}" />
-    <div class="form-group">
-        <label for="fieldName" class="col-sm-2 control-label">Name</label>
-        <div class="col-sm-4">
-            <input type="text" class="form-control" id="fieldName" name="name" />            
+        <input type="hidden" name="_csrf" value="{{csrf}}" />
+
+        <div class="form-group">
+            <label for="fieldName" class="col-sm-2 control-label">Name</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="fieldName" name="name" />
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label for="fieldEmail" class="col-sm-2 control-label">Email</label>
-        <div class="col-sm-4">
-            <input type="email" class="form-control" required id="fieldEmail" name="email" />            
+
+        <div class="form-group">
+            <label for="fieldEmail" class="col-sm-2 control-label">Email</label>
+            <div class="col-sm-4">
+                <input type="email" class="form-control" required id="fieldEmail" name="email" />
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-4">
-            <button type="submit" class="btn btn-default">Register</button>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-4">
+                <button type="submit" class="btn btn-default">Register</button>
+            </div>
         </div>
-    </div>
-</form>
+    </form>
+</div>
+
+{{#if enableAjaxSubmit}}
+{{#section 'jqueryContent'}}
+<script>
+    $(document).ready(function(){
+        $('.newsletterForm').submit(function(evt){
+            const form = $(this);
+            const container = form.closest('.formContainer');
+            evt.preventDefault();
+            $.ajax({
+                'url': form.attr('action'),
+                'type': form.attr('method'),
+                'data': form.serialize(),
+                'success': function(data){
+                    if(data.success) {
+                        container.html('Email is registered. Thank you!');
+                    } else {
+                        container.html('There is a problem');
+                    }
+                },
+                'error': function(err) {
+                    container.html('There is a problem');
+                },
+            });
+        });
+    })
+</script>
+{{/section}}
+{{/if}}

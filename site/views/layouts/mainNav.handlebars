@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
     <title>Meadowlark</title>
+
+    {{{_sections.head}}}
 </head>
 
 <body>
@@ -23,6 +25,13 @@
             </ul>
             <li><a href="/nursery-rhyme">Nursery Rhyme</a></li>
             <li><a href="/newsletter">Newsletter</a></li>
+            <li>Playground</li>
+            <ul>
+                <li><a href="/header">header</a></li>
+                <li><a href="/header-inspect">header-inspect</a></li>
+                <li><a href="/jquerytest">jquery-test</a></li>
+            </ul>
+
         </ul>
     </div>
 
@@ -37,6 +46,8 @@
         {{> weather}}
     </div>
     <footer>Maedowlark &copy; 2018-2019</footer>
+
+    {{{ _sections.jqueryContent}}}
 
     {{#if showTests}}
         <div id="mocha"></div>

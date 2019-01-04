@@ -53,14 +53,14 @@ app.get('/', function(req, res) {
 });
 
 app.get('/header', function(req, res) {
-	res.set('Content-Type', 'text/plain');	
-	let s = '';
-	for(let n in req.headers) s += n + ': ' + req.headers[n] + '\n';
+	let s = Object.keys(req.headers).map( k => k + ': ' + req.headers[k] + '\n').join('');
+	res.render('playground/dump', {'text': s});
+});
 
-	s += 'req';
-	s += util.inspect(req, false, 4);
-
-	res.send(s);
+app.get('/header-inspect/:level?', function(req, res) {
+	let level = req.params.level || 1;
+	let s = util.inspect(req, false, level);
+	res.render('playground/dump', {'text': s });
 });
 
 app.get('/about', function(req, res) {
@@ -84,7 +84,7 @@ app.get('/tours/request-group-rate', function(req, res) {
 
 // ch06 examples - request and response
 app.get('/error', function(req, res) {
-	res.status(500).render('error', {
+	res.status(500).render('playground/error', {
 		err: '....err....',
 	});
 });
@@ -158,13 +158,11 @@ app.get('/tours', function(req, res) {
 
 // ch07 example: handlebars: section
 app.get('/jqueryTest', function(req, res){
-	res.render('jquerytest', {
-		'layout': 'mainUseSection'
-	});
+	res.render('playground/jquerytest');
 });
 
 app.get('/nursery-rhyme', function(req, res) {
-	res.render('nursery-rhyme', {'layout': 'mainUseSection'});
+	res.render('nursery-rhyme');
 });
 app.get('/data/nursery-rhyme', function(req, res) {
 	res.json({
@@ -180,7 +178,8 @@ let bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({'extended': true}));
 app.get('/newsletter', function(req, res) {
 	res.render('newsletter', {
-		'csrf': 'Dummy crtf value'
+		'csrf': 'Dummy crtf value',
+		'enableAjaxSubmit': true,
 	});
 });
 
@@ -190,7 +189,13 @@ app.post('/process', function(req, res) {
 	console.log(`Email: ${req.body.email}`);
 	console.log(`crtf value: ${req.body._csrf}`);
 
-	res.redirect(303, '/thank-you');
+	if(req.xhr || req.accepts('json,html') === 'json') {
+		console.log('json call');
+		res.json({'success': true});
+	} else {
+		console.log('html call');
+		res.redirect(303, '/thank-you');
+	}
 });
 app.get('/thank-you', function(req, res) {
 	res.render('thank-you', {'msg': 'Email reigstered!'});
