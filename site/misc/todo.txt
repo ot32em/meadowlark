@@ -1,1 +1,5 @@
 1. What is role field in form tag?
+
+2. Understand `enctype="multipart/form-data"` and enctype="application/x-www-form-urlencoded".
+
+3. Understand input tag accept field <input action="image/*>

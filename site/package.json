@@ -22,6 +22,7 @@
     "chai": "^4.2.0",
     "chromedriver": "^2.45.0",
     "express-handlebars-sections": "^1.0.1",
+    "formidable": "^1.2.1",
     "grunt": "^1.0.3",
     "grunt-cafe-mocha": "^0.1.13",
     "grunt-contrib-jshint": "^2.0.0",
