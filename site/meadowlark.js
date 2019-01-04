@@ -224,6 +224,22 @@ app.post('/contest/vacation-photo/:year/:month', function(req, res) {
 	});
 });
 
+app.get('/contest/vacation-photo-ex', function( req, res){
+	res.render('contest/vacation-photo-ex');
+});
+
+let jqupload = require('jquery-file-upload-middleware');
+app.use('/upload', function(req, res, next) {
+	console.log('upload request coming');
+	let ts = + new Date();
+	jqupload.fileHandler({
+		'uploadDir': function() {
+			return __dirname + '/public/uploads/' + ts
+		},
+		'uploadUrl': '/uploads/' + ts,
+	})(req, res, next);
+});
+
 
 // route setup :: rest 404 and 500, routed to middleware
 app.use(function(req, res, next) {

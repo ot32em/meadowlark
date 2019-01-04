@@ -27,6 +27,7 @@
     "grunt-cafe-mocha": "^0.1.13",
     "grunt-contrib-jshint": "^2.0.0",
     "grunt-exec": "^3.0.0",
+    "jquery-file-upload-middleware": "^0.1.8",
     "mocha": "^5.2.0",
     "selenium-webdriver": "^4.0.0-alpha.1",
     "util": "^0.11.1"
