@@ -46,6 +46,10 @@ app.use(function(req, res, next) {
 });
 
 
+// middleware: cookie
+let cookieparser = require('cookie-parser');
+app.use(cookieparser());
+
 
 // route setup
 app.get('/', function(req, res) {
@@ -240,6 +244,31 @@ app.use('/upload', function(req, res, next) {
 	})(req, res, next);
 });
 
+
+app.get('/cookietest', function(req, res) {
+	// Remove cookie by browsing `/cookietest?clearcookie=1`
+	if(req.query.clearcookie && req.query.clearcookie == '1') {
+		Object.keys(req.cookies).map(
+			k => {
+				res.clearCookie(k);
+				console.log(`Removed cookie '${k}'`);
+			}
+		);
+		return res.redirect(303, '/cookietest');
+	}
+
+	// Add a new cookie with current timestamp as key
+	let ts = +new Date();
+	res.cookie(ts, 'true');
+
+	// Transform cookie object `{...}` to `['key': k, 'value': v]` for viewing
+	const cookieItems = Object.keys(req.cookies).map(
+		k => {return {'key': k, 'value': req.cookies[k] };}
+	);
+	res.render('playground/cookietest', {
+		'cookieItems': cookieItems,
+	});
+});
 
 // route setup :: rest 404 and 500, routed to middleware
 app.use(function(req, res, next) {

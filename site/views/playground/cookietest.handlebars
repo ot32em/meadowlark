@@ -1,0 +1,19 @@
+<h1>Cookie Test</h1>
+<p>
+    <a href="/cookietest?clearcookie=1">Clear cookies</a>
+</p>
+<table>
+    <tr>
+        <th colspan="2">{{cookieItems.length}} cookies</th>
+    </tr>
+    <tr>
+        <th>Key</th>
+        <td>Value</td>
+    </tr>
+    {{#each cookieItems}}
+        <tr>
+            <th>{{ key }}</th>
+            <td>{{ value }}</td>
+        </tr>
+    {{/each}}
+</table>
