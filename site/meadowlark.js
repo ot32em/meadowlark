@@ -257,6 +257,8 @@ app.get('/cookietest', function(req, res) {
 		return res.redirect(303, '/cookietest');
 	}
 
+
+
 	// Add a new cookie with current timestamp as key
 	let ts = +new Date();
 	res.cookie(ts, 'true');
@@ -269,6 +271,53 @@ app.get('/cookietest', function(req, res) {
 		'cookieItems': cookieItems,
 	});
 });
+
+app.get('/buy-dental-floss', function(req, res) {
+	let cxt = {
+		'name': '牙線',
+		'unit': '盒',
+		'price': 50,	
+		'cash': (typeof req.cookies.cash === 'undefined')? 200: +req.cookies.cash,
+		'itemNum': (typeof req.cookies.itemNum === 'undefined')? 0: +req.cookies.itemNum,
+	};
+
+	if(req.query.buy == '1')
+	{
+		if(cxt.cash < cxt.price) {
+			cxt.result = {'success': false, 'msg': '購買失敗。原因: 你沒有錢，買不起。', 'alertStyle': 'danger'};
+		} else {
+			cxt.cash = cxt.cash - cxt.price;
+			cxt.itemNum = cxt.itemNum + 1;
+			cxt.result = {'success': true, 'msg': '購買成功', 'alertStyle': 'success'};
+		}		
+		res.cookie('cash', cxt.cash);
+		res.cookie('itemNum', cxt.itemNum);
+		res.cookie('result', cxt.result);
+		return res.redirect(303, '/buy-dental-floss');
+	}
+	if(req.query.refund == '1')
+	{
+		if(cxt.itemNum <= 0) {
+			cxt.result = {'success': false, 'msg': '購買失敗。原因: 你什麼也沒有，也想拿來退。', 'alertStyle': 'danger'};
+		} else {
+			cxt.cash = cxt.cash + cxt.price;
+			cxt.itemNum = cxt.itemNum - 1;
+			cxt.result = {'success': true, 'msg': '退款成功', 'alertStyle': 'success'};
+		}
+		res.cookie('cash', cxt.cash);
+		res.cookie('itemNum', cxt.itemNum);
+		res.cookie('result', cxt.result);
+		return res.redirect(303, '/buy-dental-floss');
+	}
+
+	if(req.cookies.result)
+	{
+		cxt.result = req.cookies.result;
+		res.clearCookie('result');
+	}
+	res.render('playground/buy-dental-floss', cxt);
+});
+
 
 // route setup :: rest 404 and 500, routed to middleware
 app.use(function(req, res, next) {
