@@ -58,13 +58,13 @@ app.get('/', function(req, res) {
 
 app.get('/header', function(req, res) {
 	let s = Object.keys(req.headers).map( k => k + ': ' + req.headers[k] + '\n').join('');
-	res.render('playground/dump', {'text': s});
+	res.render('playground/dump', {'title': 'Header Dump', 'text': s});
 });
 
 app.get('/header-inspect/:level?', function(req, res) {
 	let level = req.params.level || 1;
 	let s = util.inspect(req, false, level);
-	res.render('playground/dump', {'text': s });
+	res.render('playground/dump', {'title': 'Header Inspect', 'text': s });
 });
 
 app.get('/about', function(req, res) {
