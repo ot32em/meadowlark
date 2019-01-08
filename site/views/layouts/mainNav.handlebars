@@ -12,44 +12,46 @@
 </head>
 
 <body>
-    <h1>Meadowlark</h1>
-    <div>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/about">About</a></li>
-            <li><a href="/tours">Tours</a></li>
-            <ul>
-                <li><a href="/tours/hood-river">Hood River</a></li>
-                <li><a href="/tours/taipei">Taipei</a></li>
-                <li><a href="/tours/request-group-rate">Request Group Rate</a></li>
-            </ul>
-            <li><a href="/nursery-rhyme">Nursery Rhyme</a></li>
-            <li><a href="/newsletter">Newsletter</a></li>
-            <li><a href="/contest/vacation-photo">Photo Contest</a></li>
-            <li><a href="/contest/vacation-photo-ex">Photo Contest Ex</a></li>
-            <li>Playground</li>
-            <ul>
-                <li><a href="/header">header</a></li>
-                <li><a href="/header-inspect">header-inspect</a></li>
-                <li><a href="/jquerytest">jquery-test</a></li>
-                <li><a href="/cookietest">cookie-test</a></li>
-                <li><a href="/buy-dental-floss">買牙線</a></li>
-            </ul>
-        </ul>
+    <header><h1 class="display-1">Meadowlark</h1></header>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/tours">Tours</a></li>
+                    <ul>
+                        <li><a href="/tours/hood-river">Hood River</a></li>
+                        <li><a href="/tours/taipei">Taipei</a></li>
+                        <li><a href="/tours/request-group-rate">Request Group Rate</a></li>
+                    </ul>
+                    <li><a href="/nursery-rhyme">Nursery Rhyme</a></li>
+                    <li><a href="/newsletter">Newsletter</a></li>
+                    <li><a href="/contest/vacation-photo">Photo Contest</a></li>
+                    <li><a href="/contest/vacation-photo-ex">Photo Contest Ex</a></li>
+                    <li>Playground</li>
+                    <ul>
+                        <li><a href="/header">header</a></li>
+                        <li><a href="/header-inspect">header-inspect</a></li>
+                        <li><a href="/jquerytest">jquery-test</a></li>
+                        <li><a href="/cookietest">cookie-test</a></li>
+                        <li><a href="/buy-dental-floss">買牙線</a></li>
+                    </ul>
+                </ul>
+                <div>
+                    <h3>Weather Widget</h3>
+                    {{> weather}}
+                </div>
+            </div>
+            <div class="col-8">
+                {{{body}}}
+            </div>
+            
+        </div>
     </div>
 
-    <hr />
-
-    {{{body}}}
-
-    <hr />
-
-    <div>
-        <h3>Weather Widget</h3>
-        {{> weather}}
-    </div>
-    <footer>Maedowlark &copy; 2018-2019</footer>
-
+    <footer style="text-align: center">Maedowlark &copy; 2018-2019</footer>
     {{{ _sections.jqueryContent}}}
 
     {{#if showTests}}
