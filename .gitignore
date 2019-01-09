@@ -67,3 +67,4 @@ chromedriver.exe
 
 .vscode/
 site/public/uploads/
+confidential.js
