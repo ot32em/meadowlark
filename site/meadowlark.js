@@ -19,9 +19,25 @@ app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
 
+
 // setup local module: rolldice
 let rolldiceMod = require('./lib/rolldice.js');
 let testdata = require('./lib/data.js');
+
+
+// middleware: cookie
+let cookieparser = require('cookie-parser');
+app.use(cookieparser(require('./lib/confidential.js').secretCookie));
+let session = require('express-session');
+app.use(session());
+
+app.use(function(req, res, next) {
+	if(req.session._flash){
+		res.locals._flash = req.session._flash;
+		delete res.session._flash;
+	}
+	next();
+});
 
 
 // middleware: static resource
@@ -46,10 +62,13 @@ app.use(function(req, res, next) {
 });
 
 
+<<<<<<< HEAD
 // middleware: cookie
 let cookieparser = require('cookie-parser');
 app.use(cookieparser(require('./lib/confidential.js').secretCookie));
 
+=======
+>>>>>>> add unfinished express-session work
 
 // route setup
 app.get('/', function(req, res) {
@@ -272,57 +291,76 @@ app.get('/cookietest', function(req, res) {
 	});
 });
 
-app.get('/buy-dental-floss', function(req, res) {
-	let cxt = {
-		'name': '牙線',
-		'unit': '盒',
-		'price': 50,	
-		'cash': req.signedCookies.cash,
-		'itemNum': (typeof req.cookies.itemNum === 'undefined')? 0: +req.cookies.itemNum,
-	};
-	if(typeof cxt.cash === 'undefined' || (typeof cxt.cash ==='number' && cxt.cash === NaN))
-		cxt.cash = 200;
-	else
-		cxt.cash = +cxt.cash;
-
-	if(req.query.buy == '1')
+let market = {
+	'items': [
+		{
+			'id': 0,
+			'name': '牙線',
+			'unit': '盒',
+			'price': 50,
+		},
+	]
+};
+market.items.map( (item, idx) => {
+	item.id = idx;
+	return item;
+});
+let account = {
+	'cash': 200,
+	'boughtItems': [],
+};
+app.use('/market', function(req, res, next){
+	if( !isNaN(parseInt(req.sessions.cash)) &&
+		!Array.isArray(req.sessions.boughtItems))
 	{
-		if(cxt.cash < cxt.price) {
-			cxt.result = {'success': false, 'msg': '購買失敗。原因: 你沒有錢，買不起。', 'alertStyle': 'danger'};
-		} else {
-			cxt.cash = cxt.cash - cxt.price;
-			cxt.itemNum = cxt.itemNum + 1;
-			cxt.result = {'success': true, 'msg': '購買成功', 'alertStyle': 'success'};
-		}		
-		res.cookie('cash', cxt.cash, {'signed': true});
-		res.cookie('itemNum', cxt.itemNum, {'httpOnly': true, 'maxAge': 10000});
-		res.cookie('result', cxt.result);
-		return res.redirect(303, '/buy-dental-floss');
-	}
-	if(req.query.refund == '1')
-	{
-		if(cxt.itemNum <= 0) {
-			cxt.result = {'success': false, 'msg': '購買失敗。原因: 你什麼也沒有，也想拿來退。', 'alertStyle': 'danger'};
-		} else {
-			cxt.cash = cxt.cash + cxt.price;
-			cxt.itemNum = cxt.itemNum - 1;
-			cxt.result = {'success': true, 'msg': '退款成功', 'alertStyle': 'success'};
+		account.cash = +req.session.cash;
+		for (const boughtItem of req.sessions.boughtItems) {
+			if(	typeof boughtItem.id !== 'undefined' &&
+				!isNaN(boughtItem.id) &&
+				+boughtItem.id < market.items.length &&
+				typeof boughtItem.nums !== 'undefined')
+			{
+				account.boughtItems.push({
+					'id': boughtItem.id,
+					'num': boughtItem.num,
+					'item': market.items[boughtItem.id],
+				});
+			}
 		}
-		res.cookie('cash', cxt.cash, {'signed': true});
-		res.cookie('itemNum', cxt.itemNum, {'httpOnly': true, 'maxAge': 10000});
-		res.cookie('result', cxt.result);
-		return res.redirect(303, '/buy-dental-floss');
 	}
+});
+app.post('/market/buy', function(req, res) {
+	if(cxt.cash < cxt.price) {
+		cxt.result = {'success': false, 'msg': '購買失敗。原因: 你沒有錢，買不起。', 'alertStyle': 'danger'};
+	} else {
+		cxt.cash = cxt.cash - cxt.price;
+		cxt.itemNum = cxt.itemNum + 1;
+		cxt.result = {'success': true, 'msg': '購買成功', 'alertStyle': 'success'};
+	}
+	res.cookie('cash', cxt.cash);
+	res.cookie('itemNum', cxt.itemNum);
+	res.cookie('result', cxt.result);
+	return res.redirect(303, '/buy-dental-floss');
+});
+app.post('/market/refund', function(req, res) {
+	if(cxt.cash < cxt.price) {
+		cxt.result = {'success': false, 'msg': '購買失敗。原因: 你沒有錢，買不起。', 'alertStyle': 'danger'};
+	} else {
+		cxt.cash = cxt.cash - cxt.price;
+		cxt.itemNum = cxt.itemNum + 1;
+		cxt.result = {'success': true, 'msg': '購買成功', 'alertStyle': 'success'};
+	}
+	res.cookie('cash', cxt.cash);
+	res.cookie('itemNum', cxt.itemNum);
+	res.cookie('result', cxt.result);
+	return res.redirect(303, '/buy-dental-floss');
+});
 
-	if(req.cookies.result)
-	{
-		cxt.result = req.cookies.result;
-		res.clearCookie('result');
-	}
-	
-	res.cookie('cash', cxt.cash, {'signed': true});
-	res.cookie('itemNum', cxt.itemNum, {'httpOnly': true, 'maxAge': 10000});
-	res.render('playground/buy-dental-floss', cxt);
+app.get('/market', function(req, res) {
+	res.render('playground/market', {
+		'market': market,
+		'account': account,
+	});
 });
 
 
