@@ -34,6 +34,7 @@ app.use(require('express-session')({
 	'secret':  secret,
 }));
 
+// middleware: flash
 app.use(function(req, res, next) {
 	if(req.session._flash){
 		res.locals._flash = req.session._flash;
@@ -42,10 +43,8 @@ app.use(function(req, res, next) {
 	next();
 });
 
-
 // middleware: static resource
 app.use(expressMod.static(__dirname + '/public'));
-
 
 // middleware: QA data
 app.use(function(req, res, next) {
@@ -56,7 +55,6 @@ app.use(function(req, res, next) {
 	next();
 });
 
-
 // middleware: weather widget
 app.use(function(req, res, next) {
 	if(!res.locals.partials) res.locals.partials = {};
@@ -64,9 +62,10 @@ app.use(function(req, res, next) {
 	next();
 });
 
+// middleware: auth
 let user = 'guest';
 let isLogin = false;
-app.use('/', function(req, res, next) {
+app.use(function(req, res, next) {
 	if(req.session.user)
 	{
 		user = req.session.user;
@@ -82,6 +81,8 @@ app.use('/', function(req, res, next) {
 	next();
 });
 
+// middleware: body-parser
+app.use(require('body-parser').urlencoded({'extended': true}));
 
 
 // route setup
@@ -210,9 +211,6 @@ app.get('/data/nursery-rhyme', function(req, res) {
 	});
 });
 
-// ch08 form
-let bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({'extended': true}));
 app.get('/newsletter', function(req, res) {
 	res.render('newsletter', {
 		'csrf': 'Dummy crtf value',
