@@ -26,10 +26,13 @@ let testdata = require('./lib/data.js');
 
 
 // middleware: cookie
-let cookieparser = require('cookie-parser');
-app.use(cookieparser(require('./lib/confidential.js').secretCookie));
-let session = require('express-session');
-app.use(session());
+const secret = require('./lib/confidential.js').secretCookie;
+app.use(require('cookie-parser')(secret));
+app.use(require('express-session')({
+	'resave': false,
+	'saveUninitialized': false,
+	'secret':  secret,
+}));
 
 app.use(function(req, res, next) {
 	if(req.session._flash){
