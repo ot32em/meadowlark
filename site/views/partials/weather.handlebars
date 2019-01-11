@@ -1,7 +1,7 @@
 <div class="weatherWidget">
-    <ul>
+    <ul class="list-group  list-group-flush">
     {{#each partials.weather.locations}}
-        <li class="location">
+        <li class="location list-group-item">
             {{name}}: 
             <a href="{{forecastUrl}}">
                 {{weather}}, {{temp}}
