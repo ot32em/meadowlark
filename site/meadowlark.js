@@ -63,21 +63,19 @@ app.use(function(req, res, next) {
 });
 
 // middleware: auth
-let user = 'guest';
-let isLogin = false;
 app.use(function(req, res, next) {
-	if(req.session.user)
-	{
-		user = req.session.user;
-		isLogin = true;
+	if(req.session.username) {
+		auth = {
+			'username': req.session.username,
+			'isLogin': true,
+		}
+	} else {
+		auth = { 
+			'isLogin': false,
+		}
 	}
-	else
-	{
-		user = 'guest';
-		isLogin = false;
-	}
-	res.locals.user = user;
-	res.locals.isLogin = isLogin;
+	res.locals.auth = auth;
+	res.locals.url = req.url;
 	next();
 });
 
@@ -88,6 +86,23 @@ app.use(require('body-parser').urlencoded({'extended': true}));
 // route setup
 app.get('/', function(req, res) {
 	res.render('home');
+});
+
+
+app.post('/login', function(req, res) {
+	let username = req.body.username;
+	let url = req.body.refUrl || '/';
+	if(username.length > 3) {
+		req.session.username = username;
+	}
+	res.redirect(303, url);
+});
+
+
+app.post('/logout', function(req, res) {
+	let url = req.body.refUrl || '/';
+	delete req.session.username;
+	res.redirect(303, url);
 });
 
 app.get('/header', function(req, res) {
@@ -304,23 +319,6 @@ app.get('/cookietest', function(req, res) {
 });
 
 
-app.get('/login', function(req, res) {
-	res.render('playground/login');
-});
-
-app.post('/login', function(req, res) {
-	let name = req.body.name;
-	if(name.length > 3) {
-		req.session.user = name;
-	}
-	res.redirect(303, '/login');
-});
-
-
-app.post('/logout', function(req, res) {
-	delete req.session.user;
-	res.redirect(303, '/login');
-});
 
 
 // route setup :: rest 404 and 500, routed to middleware

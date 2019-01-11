@@ -1,0 +1,19 @@
+<div class="authWidget">
+    {{#if auth.isLogin }}
+        <div>
+            <form method="POST" action="/logout" class="form-inline">
+                <span class="badge badge-light">{{auth.username}}</span>
+                <button class="btn btn-secondary btn-sm" type="submit">登出</button>
+            </form>
+        </div>
+    {{else}}
+        <div>
+            <form method="POST" action="/login" class="form-inline">
+                <input class="form-control" type="text" name="username"/>
+                &nbsp;
+                <input type="hidden" name="refUrl" value="{{url}}" />
+                <button class="btn btn-secondary btn-sm" type="submit">登入</button>
+            </form>
+        </div>
+    {{/if}}
+</div>
