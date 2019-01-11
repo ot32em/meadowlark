@@ -1,19 +1,28 @@
 <div class="authWidget">
     {{#if auth.isLogin }}
+
+    <form method="POST" action="/logout" class="form">
         <div>
-            <form method="POST" action="/logout" class="form-inline">
-                <span class="badge badge-light">{{auth.username}}</span>
-                <button class="btn btn-secondary btn-sm" type="submit">登出</button>
-            </form>
-        </div>
+            <div class="mb-1">
+                <span class="mt-4 pt-3">
+                    {{auth.username}}
+                </span>
+            <button class=" btn btn-sm btn-danger float-right" type="submit">登出</button>
+            </div>
+         </div>
+    </form>
+
     {{else}}
-        <div>
-            <form method="POST" action="/login" class="form-inline">
-                <input class="form-control" type="text" name="username"/>
-                &nbsp;
-                <input type="hidden" name="refUrl" value="{{url}}" />
-                <button class="btn btn-secondary btn-sm" type="submit">登入</button>
-            </form>
+
+    <form method="POST" action="/login" class="form-inline">
+        <div class="input-group">
+            <input class="form-control form-control-sm" type="text" name="username" placeholder="Your name..."/>
+            <div class="input-group-append">
+                <button class="btn btn-primary btn-sm" type="submit">登入</button>
+            </div>
         </div>
+        <input type="hidden" name="refUrl" value="{{url}}" />    
+    </form>
+
     {{/if}}
 </div>
