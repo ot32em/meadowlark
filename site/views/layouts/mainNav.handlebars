@@ -1,57 +1,31 @@
 <html>
 <head>
-    {{#if showTests}}
-        <link rel="stylesheet" href="/vendor/mocha.css">
-    {{/if}}
-    <script src="//code.jquery.com/jquery-2.0.2.min.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-
-    <title>Meadowlark</title>
-
+     <title>Meadowlark</title>
+    {{> common-header }}
     {{{_sections.head}}}
+    {{> qa-header }}
 </head>
 
 <body>
-    <header><h1 class="display-1">Meadowlark</h1></header>
+    {{> common-top}}
 
     <div class="container-fluid">
         <div class="row">
             <div class="col col-md-3 col-lg-2">
-                <div class="auth">
-                    {{> auth }}
-                </div>
+                <div class="auth">{{> auth }}</div>
                 <hr />                
-                <div class="nav">
-                    {{> nav}}
-                </div>
+                <div class="nav">{{> nav }}</div>
                 <hr />
-                <div>
-                    {{> weather}}
-                </div>
+                <div>{{> weather}}</div>
             </div>
             <div class="col col-md-9 col-md-10">
                 {{{body}}}
             </div>
-            
         </div>
     </div>
 
-    <footer style="text-align: center">Meadowlark &copy; 2018-2019</footer>
+    {{> common-footer }}
     {{{ _sections.jqueryContent}}}
-
-    {{#if showTests}}
-        <div id="mocha"></div>
-        <script src="/vendor/mocha.js"></script>
-        <script src="/vendor/chai.js"></script>
-        <script>
-            mocha.ui('tdd');
-            let assert = chai.assert;
-        </script>
-        <script src="/qa/tests-global.js"></script>
-        {{#if pageTestScript}}
-            <script src="{{pageTestScript}}"></script>
-        {{/if}}
-        <script>mocha.run();</script>
-    {{/if}}
+    {{> qa-body}}
 </body>
 </html>
