@@ -1,20 +1,20 @@
 <html>
 <head>
      <title>Meadowlark</title>
-    {{> common-header }}
+    {{> common/header }}
     {{{_sections.head}}}
-    {{> qa-header }}
+    {{> qa/header }}
 </head>
 
 <body>
-    {{> common-top}}
+    {{> common/top}}
 
     <div class="container-fluid">
         <div class="row">
             <div class="col col-md-3 col-lg-2">
                 <div class="auth">{{> auth }}</div>
                 <hr />                
-                <div class="nav">{{> nav }}</div>
+                <div class="nav">{{> common/nav }}</div>
                 <hr />
                 <div>{{> weather}}</div>
             </div>
@@ -24,8 +24,8 @@
         </div>
     </div>
 
-    {{> common-footer }}
+    {{> common/footer }}
     {{{ _sections.jqueryContent}}}
-    {{> qa-body}}
+    {{> qa/body}}
 </body>
 </html>
