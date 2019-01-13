@@ -10,7 +10,7 @@ app.set('port', process.env.PORT || 3000);
 // setup: view engine
 let handlebarsMod = require('express3-handlebars');
 let handlebars = handlebarsMod.create(
-	{defaultLayout: 'mainNav'}
+	{defaultLayout: 'grid'}
 );
 let handlebarsSectionMod = require('express-handlebars-sections');
 handlebarsSectionMod(handlebars);
