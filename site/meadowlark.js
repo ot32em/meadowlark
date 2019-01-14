@@ -4,8 +4,6 @@ let util = require('util');
 // steup: express server
 let expressMod = require('express');
 let app = expressMod();
-app.set('port', process.env.PORT || 3000);
-
 
 // setup: view engine
 let handlebarsMod = require('express3-handlebars');
@@ -331,7 +329,4 @@ app.use(function(err, req, res, next) {
 	res.render('500');
 });
 
-
-app.listen(app.get('port'), function() {
-	console.log(`Server is up. Port: ${ app.get("port") }. Press ctrl + c to close`);
-});
+module.exports = app;
