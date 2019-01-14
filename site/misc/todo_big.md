@@ -1,32 +1,28 @@
-1. What is role field in form tag?
+# Things want to learn
 
-2. Understand `enctype="multipart/form-data"` and enctype="application/x-www-form-urlencoded".
+1. Deployment/CI
+    * Hosting
+    * Scale/c10k
+    * routes/domain
+    * CDN
 
-3. Understand input tag accept field <input action="image/*>
+2. Security
+    anti-hacks
+    crtf
+    middleman
+    https
 
-4. Things want to learn
-    a. Deployment/CI
-        Hosting
-        Scale/c10k
-        route/domain
-        CDN
+3. Cash flow
+    third-party chain
 
-    b. Security
-        anti-hacks
-        crtf
-        middleman
-        https
+4. Account
+    login by third-party/fb/twitter/github account
 
-    c. Cash flow
-        third-party chain
+5. Text editing
 
-    d. Account
-        login by third-party/fb/twitter/github account
+6. Anti-bots/anti-ads
 
-    e. Text editing
+7. Ads
 
-    f. Anti-bots/anti-ads
-
-    i. Ads
-
-j. crumbnail
+8. Misc
+    * crumbnail
