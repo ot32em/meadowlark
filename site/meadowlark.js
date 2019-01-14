@@ -63,7 +63,9 @@ app.use(function(req, res, next) {
 
 app.use(require('body-parser').urlencoded({'extended': true}));
 
-require('./routes/').init(app);
+app.use('/', require('./routes/root'));
+app.use('/tour', require('./routes/tour'));
+app.use('/api', require('./routes/api'));
 
 
 // route setup :: rest 404 and 500, routed to middleware
