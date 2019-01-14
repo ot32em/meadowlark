@@ -1,29 +1,19 @@
-// setup: common require
 let util = require('util');
+let express = require('express');
 
-// steup: express server
-let expressMod = require('express');
-let app = expressMod();
+// express-instance
+let app = express();
 
-// setup: view engine
-let handlebarsMod = require('express3-handlebars');
-let handlebars = handlebarsMod.create(
-	{defaultLayout: 'main'}
-);
-let handlebarsSectionMod = require('express-handlebars-sections');
-handlebarsSectionMod(handlebars);
-
+// view engine
+let handlebars = require('express3-handlebars').create({defaultLayout: 'main'});
+require('express-handlebars-sections')(handlebars);
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
+let rolldice = require('./lib/rolldice.js');
+let data = require('./lib/data.js');
 
 
-// setup local module: rolldice
-let rolldiceMod = require('./lib/rolldice.js');
-let testdata = require('./lib/data.js');
-
-
-// middleware: cookie
 const secret = require('./lib/confidential.js').secretCookie;
 app.use(require('cookie-parser')(secret));
 app.use(require('express-session')({
@@ -42,7 +32,7 @@ app.use(function(req, res, next) {
 });
 
 // middleware: static resource
-app.use(expressMod.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/public'));
 
 // middleware: QA data
 app.use(function(req, res, next) {
@@ -56,7 +46,7 @@ app.use(function(req, res, next) {
 // middleware: weather widget
 app.use(function(req, res, next) {
 	if(!res.locals.partials) res.locals.partials = {};
-	res.locals.partials.weather = testdata.weather;
+	res.locals.partials.weather = data.weather;
 	next();
 });
 
@@ -116,7 +106,7 @@ app.get('/header-inspect/:level?', function(req, res) {
 
 app.get('/about', function(req, res) {
 	res.render('about', {
-		'dice': rolldiceMod.rollDice(),
+		'dice': rolldice.rollDice(),
 		'pageTestScript': '/qa/tests-about.js'
 	});
 });
@@ -199,7 +189,7 @@ app.get('/tours', function(req, res) {
 			name: 'United States dollars',
 			abbrev: 'USD',
 		},
-		tours: testdata.tours,
+		tours: data.tours,
 		specialsUrl: '/january-specials',
 		currencies: [' USD', 'GBP', 'BTC'],
 	};
