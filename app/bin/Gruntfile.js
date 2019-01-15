@@ -11,11 +11,11 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
         cafemocha: {
-            all: {src: 'qa/tests-crosspage.js', options: { ui: 'tdd', timeout: '5000', force: true }, }
+            all: {src: 'test/tests-crosspage.js', options: { ui: 'tdd', timeout: '5000', force: true }, }
         },
         jshint: {
             app: ['meadowlark.js', 'public/js/**/*.js', 'lib/**/*.js'],
-            qa: ['gruntfile.js', 'public/qa/**/*.js', 'qa/**/*.js'],
+            test: ['gruntfile.js', 'public/test/**/*.js', 'test/**/*.js'],
             options: { jshintrc: true, }, 
         },
         exec: {
