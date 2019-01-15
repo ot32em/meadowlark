@@ -6,6 +6,8 @@ require('express-handlebars-sections')(handlebars);
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
+app.use(require('./controllers/util/log').makeLogRequests('app'));
+
 // setup controller
 require('./controllers/').setup(app);
 
