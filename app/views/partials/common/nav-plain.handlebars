@@ -1,23 +1,12 @@
 <nav>
-    <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/about">About</a></li>
-        <li><a href="/tour">Tours</a></li>
-        <ul>
-            <li><a href="/tour/hood-river">Hood River</a></li>
-            <li><a href="/tour/taipei">Taipei</a></li>
-            <li><a href="/tour/request-group-rate">Request Group Rate</a></li>
-        </ul>
-        <li><a href="/nursery-rhyme">Nursery Rhyme</a></li>
-        <li><a href="/newsletter">Newsletter</a></li>
-        <li><a href="/contest/vacation-photo">Photo Contest</a></li>
-        <li><a href="/contest/vacation-photo-ex">Photo Contest Ex</a></li>
-        <li>Playground</li>
-        <ul>
-            <li><a href="/header">header</a></li>
-            <li><a href="/header-inspect">header-inspect</a></li>
-            <li><a href="/jquerytest">jquery-test</a></li>
-            <li><a href="/cookietest">cookie-test</a></li>
-        </ul>
-    </ul>
+    <ul>{{#each _nav}}
+    {{#if link}}
+        <li><a href="{{link}}">{{name}}</a></li>
+    {{else}}
+        <li>{{name}}</li>
+        <ul>{{#each links}}
+            <li><a href="{{link}}">{{name}}</a></li>
+        {{/each}}</ul>
+    {{/if}}
+    {{/each}}</ul>
 </nav>

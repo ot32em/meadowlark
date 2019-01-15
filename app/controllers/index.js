@@ -14,6 +14,7 @@ function setup (app) {
 
 
     // setup::middleware::user
+    app.use(require('./util/nav'));
     app.use(require('./util/auth'));
     app.use(require('./util/flash'));
     app.use(require('./util/qa'));
