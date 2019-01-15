@@ -66,5 +66,5 @@ typings/
 chromedriver.exe
 
 .vscode/
-site/public/uploads/
+app/public/uploads/
 confidential.js

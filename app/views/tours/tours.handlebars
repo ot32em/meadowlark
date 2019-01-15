@@ -1,0 +1,30 @@
+<h1>Tours</h1>
+<ul>
+    {{#each tours}}
+        {{! This is handlebar template engine comment, not visiable in html}}
+        <li>
+            {{name}} - {{price}}
+            {{#if ../currency}}
+                {{ ../../currency.abbrev }}
+            {{/if}}
+        </li>
+    {{/each}}
+
+    {{#unless currencies}}
+        <p>All prices are in {{currency.abbrev}}.</p>
+    {{/unless}}
+
+    {{#if specialsUrl}}
+        <p>Checkout our <a href="{{specialsUrl}}">specials</a>.</p>
+    {{else}}
+        <p>Please check back often for specials.</p>
+    {{/if}}
+
+    <p>
+        {{#each currencies}}
+            <a href="#" class="currency">{{.}}</a>
+        {{else}}
+            Unfortunately, we currently only accept {{currency.name}}.
+        {{/each}}
+    </p>
+</ul>
