@@ -1,12 +1,10 @@
-let util = require('util');
-let express = require('express');
-let app = new express.Router();
+
+let app = new require('express').Router();
 
 
 app.get('/', function(req, res) {
 	res.render('home');
 });
-
 
 app.post('/login', function(req, res) {
 	let username = req.body.username;
@@ -16,7 +14,6 @@ app.post('/login', function(req, res) {
 	}
 	res.redirect(303, url);
 });
-
 
 app.post('/logout', function(req, res) {
 	let url = req.body.refUrl || '/';
@@ -29,6 +26,7 @@ app.get('/header', function(req, res) {
 	res.render('playground/dump', {'title': 'Header Dump', 'text': s});
 });
 
+let util = require('util');
 app.get('/header-inspect/:level?', function(req, res) {
 	let level = req.params.level || 1;
 	let s = util.inspect(req, false, level);
@@ -51,7 +49,6 @@ app.get('/error', function(req, res) {
 		err: '....err....',
 	});
 });
-
 
 
 // ch07 example: handlebars: section

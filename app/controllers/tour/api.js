@@ -1,11 +1,13 @@
 let express = require('express');
 let app = new express.Router();
 
-app.get('/tours', function(req, res) {
+let tours = require('../../test/fixtures/data').tours;
+
+app.get('/', function(req, res) {
 	const toursXml = (tours) => {
-		return '<?xml version="1.0"?>\n\t<tours>\n' +
+		return '<?xml version="1.0"?><xml>\n\t<tours>\n' +
 				tours.map( (t) => `\t\t<tour id="${t.id}" price="${t.price}">${t.name}</tour>\n`).join('') +
-				'\t<tours>\n</xml>';
+				'\t</tours>\n</xml>';
 	};
 	const toursTxt = (tours) => tours.map( (t) => `${t.id}: ${t.name} (${t.price})\n`).join('');
 
@@ -32,7 +34,7 @@ app.get('/tours', function(req, res) {
 	});
 });
 
-app.put('/tour/:id', function(req, res) {
+app.put('/:id', function(req, res) {
 	let tourFound = tours.find( (tour) => tour.id == req.params.id);
 	if(tourfound) {
 		if(req.query.name) tourFound.name = req.query.name;
