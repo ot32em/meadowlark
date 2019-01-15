@@ -19,19 +19,19 @@ app.use(express.static(__dirname + '/public'));
 app.use(require('body-parser').urlencoded({'extended': true}));
 
 
-app.use(require('./middlewares/auth'));
-app.use(require('./middlewares/flash'));
-app.use(require('./middlewares/qa'));
-app.use(require('./middlewares/weather'));
+app.use(require('./site/middlewares/auth'));
+app.use(require('./site/middlewares/flash'));
+app.use(require('./site/middlewares/qa'));
+app.use(require('./site/middlewares/weather'));
 
 
-app.use('/', require('./routes/root'));
-app.use('/tour', require('./routes/tour'));
-app.use('/api', require('./routes/api'));
+app.use('/', require('./site/routes/root'));
+app.use('/tour', require('./site/routes/tour'));
+app.use('/api', require('./site/routes/api'));
 
 
 // route setup :: rest 404 and 500, routed to middleware
-app.use(require('./middlewares/error').notFound);
-app.use(require('./middlewares/error').internalError);
+app.use(require('./site/middlewares/error').notFound);
+app.use(require('./site/middlewares/error').internalError);
 
 module.exports = app;

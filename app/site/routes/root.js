@@ -35,7 +35,7 @@ app.get('/header-inspect/:level?', function(req, res) {
 	res.render('playground/dump', {'title': 'Header Inspect', 'text': s });
 });
 
-let rolldice = require('../lib/rolldice.js');
+let rolldice = require('../../lib/rolldice.js');
 
 app.get('/about', function(req, res) {
 	res.render('about', {
