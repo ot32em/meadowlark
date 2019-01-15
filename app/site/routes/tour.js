@@ -22,7 +22,7 @@ app.delete('/:id', function(req, res) {
 	}
 });
 
-let data = require('../../lib/data.js');
+let data = require('../../test/fixtures/data.js');
 app.get('/', function(req, res) {
 	const toursIndex = {
 		currency: {

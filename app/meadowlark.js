@@ -8,7 +8,7 @@ app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
 // cookie
-let secret = require('./lib/confidential.js').secretCookie;
+let secret = require('./config/confidential.js').secretCookie;
 app.use(require('cookie-parser')(secret));
 app.use(require('express-session')({
 	'resave': false,
