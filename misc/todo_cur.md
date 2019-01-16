@@ -3,7 +3,7 @@
  * baseAuth
  * compress
  * directory
- * favicon
+ * [x] favicon
  * morgon
  ## routes
  * vhost
