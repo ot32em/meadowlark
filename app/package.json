@@ -16,8 +16,10 @@
     "handlebars": "^4.0.12",
     "jshint": "^2.9.7",
     "minimatch": ">=3.0.2",
+    "nodemailer": "^5.1.1",
     "semver": ">=4.3.2",
-    "uglify-js": ">=2.6.0"
+    "uglify-js": ">=2.6.0",
+    "xoauth2": "^1.2.0"
   },
   "devDependencies": {
     "body-parser": "^1.18.3",
