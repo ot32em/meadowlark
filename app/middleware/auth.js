@@ -1,15 +1,16 @@
 function auth(req, res, next) {
+	let authProp;
 	if(req.session.username) {
-		auth = {
+		authProp = {
 			'username': req.session.username,
 			'isLogin': true,
 		};
 	} else {
-		auth = { 
+		authProp = { 
 			'isLogin': false,
 		};
 	}
-	res.locals.auth = auth;
+	res.locals.auth = authProp;
 	res.locals.url = req.url;
 	next();
 }
