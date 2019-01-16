@@ -1,4 +1,4 @@
-let data = require('../../test/fixtures/data.js');
+let data = require('../test/fixtures/data.js');
 
 function weather(req, res, next) {
 	if(!res.locals.partials) res.locals.partials = {};

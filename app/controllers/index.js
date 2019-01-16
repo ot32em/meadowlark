@@ -14,11 +14,11 @@ function setup (app) {
 
 
     // setup::middleware::user
-    app.use(require('./util/nav'));
-    app.use(require('./util/auth'));
-    app.use(require('./util/flash'));
-    app.use(require('./util/qa'));
-    app.use(require('./util/weather'));
+    app.use(require('../middleware/nav'));
+    app.use(require('../middleware/auth'));
+    app.use(require('../middleware/flash'));
+    app.use(require('../middleware/qa'));
+    app.use(require('../middleware/weather'));
 
 
     // setup::routes
@@ -30,8 +30,8 @@ function setup (app) {
     app.use('/contest', require('./contest/'));
 
     // setup::error handling
-    app.use(require('./util/error').notFound);
-    app.use(require('./util/error').internalError);
+    app.use(require('../middleware/error').notFound);
+    app.use(require('../middleware/error').internalError);
 }
 
 module.exports = {

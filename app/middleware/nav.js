@@ -1,4 +1,4 @@
-let navLinks = require('../../lib/nav');
+let navLinks = require('../lib/nav');
 
 function nav(req, res, next) {
     res.locals._nav = navLinks;
