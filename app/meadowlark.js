@@ -33,7 +33,7 @@ app.use(require('./middleware/qa'));
 app.use(require('./middleware/weather'));
 
 // add routes
-app.use('/', require('./controllers/'));
+app.use('/', require('./routes/'));
 
 // add error handling
 app.use(require('./middleware/error').notFound);
