@@ -5,15 +5,16 @@
  * directory
  * [x] favicon
  * morgon
- ## routes
  * vhost
-
 
 ## debug
  * errorhandling
  * method-override
 
-
-
 ## profiling
  * response_time
+
+# Email
+ * Know OAuth
+ * Register gmail OAuth
+ 
