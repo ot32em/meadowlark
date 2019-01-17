@@ -68,3 +68,4 @@ chromedriver.exe
 .vscode/
 app/public/uploads/
 confidential.js
+config/
