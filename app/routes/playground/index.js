@@ -57,39 +57,6 @@ app.get('/nursery-rhyme', function(req, res) {
 	res.render('nursery-rhyme');
 });
 
-let nodemailer = require('nodemailer');
-let credentials = require('../../config/confidential');
-let log = require('bole')('mail');
-
-app.get('/mail', function(req, res) {
-	// https://stackoverflow.com/questions/48854066/missing-credentials-for-plain-nodemailer
-
-	log.info(`user ${credentials.gmail.username} pass: ${credentials.gmail.password}`);
-	let mailer = nodemailer.createTransport({
-		'service': 'gmail',
-		'auth': {
-			'user': credentials.gmail.username,
-			'pass': credentials.gmail.password,
-		},
-	});
-
-	mailer.sendMail({
-		'from': 'apeyuzuru@gmail.com',
-		'to': 'ot32em@gmail.com',
-		'subject': 'Test Mail From Meadowlark',
-		'text': "Hello",
-	}, function(err) {
-		if(err) {
-			log.error('Failed to send mail, err: ' + err);
-			res.render('thank-you', {'msg': 'Email failed to send'});
-		} else {
-			log.info('Sent a mail!');
-			res.render('thank-you', {'msg': 'Email is sent'});
-		}		
-	});
-
-});
-
 app.get('/test', function(req, res) {
 	res.set('Content-Type', 'text/plain');
 	res.send('test');

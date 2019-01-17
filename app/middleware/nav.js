@@ -23,6 +23,7 @@ function navLinks() {
             { 'name': 'Nursery Rhyme', 'link': "/playground/nursery-rhyme", },
             { 'name': 'cookie-test', 'link': "/playground/cookietest", },
         ]},
+        { 'name': '連絡我們', 'link': '/contact'},
     ]
 }
 
