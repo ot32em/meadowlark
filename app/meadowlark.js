@@ -19,7 +19,7 @@ app.use(function (req, res, next) {
 
 // add app middlewares
 let secret = require('./config/confidential.js').secretCookie;
-app.use(require('cookie-parser')(secret));
+app.use(require('cookie-parser')(secret, {'httpOnly': true}));
 app.use(require('express-session')({
     'resave': false,
     'saveUninitialized': false,
