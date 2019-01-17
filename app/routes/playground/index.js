@@ -63,21 +63,25 @@ app.get('/test', function(req, res) {
 	res.send(req.text);
 });
 
-app.get('/test-auth', function(req, res){
-	if(req.headers.authorization)
-	{
-		res.send(`auth ${req.headers.authorization}`);
-	}
-	else
-	{
-		res.set('WWW-Authenticate', 'Basic realm="TEST_AUTH_AREA", charset="UTF-8"');
-		res.send(401, `auth: ${req.headers.authorization}`);
-	}
-});
+	let html = 	`<h1>Hello from Meadowlark (use generateTextFromHtml)</h1>` +
+				`<p>This is notification from Meadowlark</p>` +
+				`<ul><li>Google</li><li>Yahoo</li><li>Microsoft</li></ul>`;
 
-app.get('/test-logout', function(req, res){	
-	res.redirect(401, '/playground/test-auth');
-});
+	mailer.sendMail({
+		'from': 'apeyuzuru@gmail.com',
+		'to': 'ot32em@gmail.com',
+		'subject': 'Test Mail From Meadowlark',
+		'html': html,
+		'generateTextFromHtml': true,
+	}, function(err) {
+		if(err) {
+			log.error('Failed to send mail, err: ' + err);
+			res.render('thank-you', {'msg': 'Email failed to send'});
+		} else {
+			log.info('Sent a mail!');
+			res.render('thank-you', {'msg': 'Email is sent'});
+		}		
+	});
 
 app.get('/throw-error', function(req, res) {	
 	throw new InternalError('intended to be throwed');	
