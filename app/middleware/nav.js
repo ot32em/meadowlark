@@ -22,6 +22,8 @@ function navLinks() {
             { 'name': 'jquery-test', 'link': "/playground/jquerytest", },
             { 'name': 'Nursery Rhyme', 'link': "/playground/nursery-rhyme", },
             { 'name': 'cookie-test', 'link': "/playground/cookietest", },
+            { 'name': '來個錯誤', 'link': "/playground/throw-error",},
+            { 'name': '關機', 'link': "/playground/close-server",},
         ]},
         { 'name': '連絡我們', 'link': '/contact'},
     ]

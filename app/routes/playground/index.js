@@ -79,5 +79,12 @@ app.get('/test-logout', function(req, res){
 	res.redirect(401, '/playground/test-auth');
 });
 
+app.get('/throw-error', function(req, res) {	
+	throw new InternalError('intended to be throwed');	
+});
+app.get('/close-server', function(req, res) {	
+	res.send('closing...');
+	process.exit(1);
+});
 
 module.exports = app;
