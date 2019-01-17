@@ -12,6 +12,7 @@ let favicon = require('express-favicon');
 app.use(favicon(__dirname + '/public/img/favicon.ico'));
 
 let log = require('bole')('app');
+let path = require('path');
 app.use(function (req, res, next) {
     log.info(`Request(method/url/ajax): [${req.method}][${req.path}][${req.xhr}] ip[${req.ip}]`);
     next();
