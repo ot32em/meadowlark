@@ -60,16 +60,14 @@ app.get('/nursery-rhyme', function(req, res) {
 let nodemailer = require('nodemailer');
 let credentials = require('../../config/confidential');
 let log = require('bole')('mail');
-let xoauth2 = require('xoauth2');
 
 app.get('/mail', function(req, res) {
 	// https://stackoverflow.com/questions/48854066/missing-credentials-for-plain-nodemailer
 
 	log.info(`user ${credentials.gmail.username} pass: ${credentials.gmail.password}`);
 	let mailer = nodemailer.createTransport({
-		'host': 'smtp.gmail.com',
+		'service': 'gmail',
 		'auth': {
-			'type': 'login',
 			'user': credentials.gmail.username,
 			'pass': credentials.gmail.password,
 		},
