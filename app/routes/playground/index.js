@@ -92,4 +92,27 @@ app.get('/mail', function(req, res) {
 
 });
 
+app.get('/test', function(req, res) {
+	res.set('Content-Type', 'text/plain');
+	res.send('test');
+	res.send(req.text);
+});
+
+app.get('/test-auth', function(req, res){
+	if(req.headers.authorization)
+	{
+		res.send(`auth ${req.headers.authorization}`);
+	}
+	else
+	{
+		res.set('WWW-Authenticate', 'Basic realm="TEST_AUTH_AREA", charset="UTF-8"');
+		res.send(401, `auth: ${req.headers.authorization}`);
+	}
+});
+
+app.get('/test-logout', function(req, res){	
+	res.redirect(401, '/playground/test-auth');
+});
+
+
 module.exports = app;
