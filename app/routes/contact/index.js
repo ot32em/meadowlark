@@ -1,16 +1,12 @@
 let app = new require('express').Router();
-let log = require('bole')('contact');
 let escape = require('escape-html');
 
-let adminConfig = require('../../config/site.js').admin;
 
 app.get('/', function(req, res) {
 	res.render('contact');
 });
 
 app.post('/', function(req, res) {
-    let nodemailer = require('nodemailer');    
-    let mailSenderConfig = require('../../config/confidential').mailsender;
 
 	let usermail = {
 		'name': escape(req.body.name),
@@ -41,23 +37,8 @@ app.post('/', function(req, res) {
 			`<br /><hr />\r\n`,
 	};
 	
-
-	// https://stackoverflow.com/questions/48854066/missing-credentials-for-plain-nodemailer
-	log.info(`user ${mailSenderConfig.username} pass: ${mailSenderConfig.password}`);
-	let mailer = nodemailer.createTransport({
-		'service': mailSenderConfig.service,
-		'auth': {
-			'user': mailSenderConfig.username,
-			'pass': mailSenderConfig.password,
-		},
-	});
-
-	mailer.sendMail({
-		'from': mailSenderConfig.email,
-		'to': adminConfig.email,
-		'subject': reply.subject,
-		'html': reply.html,
-	}, function(err) {
+	let mail = require('../../lib/mail');
+	mail(reply, function(err) {
 		if(err) {
 			req.session._flash = {'alert': 'danger', 'msg': '寄件發生問題。請連絡網站管理員。'};
 			res.redirect(303, '/contact');
