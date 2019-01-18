@@ -7,12 +7,10 @@ require('express-handlebars-sections')(handlebars);
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
-// add server middlewares
-let favicon = require('express-favicon');
-app.use(favicon(__dirname + '/public/img/favicon.ico'));
 
+// add server middlewares
+app.use(require('express-favicon')(__dirname + '/public/img/favicon.ico'));
 let log = require('bole')('app');
-let path = require('path');
 app.use(function (req, res, next) {
     log.info(`Request(method/url/ajax): [${req.method}][${req.path}][${req.xhr}] ip[${req.ip}]`);
     next();
