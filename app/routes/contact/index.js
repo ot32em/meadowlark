@@ -6,6 +6,10 @@ app.get('/', function(req, res) {
 	res.render('contact');
 });
 
+
+let mailSender = require('../../config/confidential').mailsender;
+let admin = require('../../config/site.js').admin;
+
 app.post('/', function(req, res) {
 
 	let usermail = {
@@ -38,8 +42,8 @@ app.post('/', function(req, res) {
 			'html': html
 		};
 		
-		let mail = require('../../lib/mail');
-		mail(reply, function(err) {
+		let mail = require('../../lib/mail')(admin, mailSender);
+		mail.send(reply, function(err) {
 			if(err) {
 				req.session._flash = {'alert': 'danger', 'msg': '寄件發生問題。請連絡網站管理員。'};
 				res.redirect(303, '/contact');

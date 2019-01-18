@@ -1,28 +1,30 @@
 let log = require('bole')('mail');
 
-function mail(reply, cb)
+function mail(admin, mailSender)
 {
-    let mailSenderConfig = require('../config/confidential').mailsender;
-    let adminConfig = require('../config/site.js').admin;
-    log.info(`user ${mailSenderConfig.username} pass: ${mailSenderConfig.password}`);
+	return {
+		'send': function(reply, cb) {
+			log.info(`user ${mailSender.username} pass: ${mailSender.password}`);
 
-    let nodemailer = require('nodemailer');
-	let mailer = nodemailer.createTransport({
-		'service': mailSenderConfig.service,
-		'auth': {
-			'user': mailSenderConfig.username,
-			'pass': mailSenderConfig.password,
-		},
-    });
+			let nodemailer = require('nodemailer');
+			let mailer = nodemailer.createTransport({
+				'service': mailSender.service,
+				'auth': {
+					'user': mailSender.username,
+					'pass': mailSender.password,
+				},
+			});
 
-	mailer.sendMail({
-		'from': mailSenderConfig.email,
-		'to': adminConfig.email,
-		'subject': reply.subject,
-		'html': reply.html,
-    }, function(err) {
-        cb(err);
-    });
+			mailer.sendMail({
+				'from': mailSender.email,
+				'to': admin.email,
+				'subject': reply.subject,
+				'html': reply.html,
+			}, function(err) {
+				cb(err);
+			});
+		}
+	};
 }
 
 // https://stackoverflow.com/questions/48854066/missing-credentials-for-plain-nodemailer
