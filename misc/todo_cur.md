@@ -18,9 +18,13 @@
  * Know OAuth
  * Register gmail OAuth
  
- email using view engine
- make mail lib accepte crefidential
+ [v] email using view engine
+ [v] make mail lib accepte crefidential
  solve cluster no bistre
 
  test timeout, which in setImeediate, setTimeout, and process.nextTick().
  promice in which phase.
+
+ use domain
+ use another logger/output stream or log file
+ use vhosts
