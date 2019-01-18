@@ -18,3 +18,9 @@
  * Know OAuth
  * Register gmail OAuth
  
+ email using view engine
+ make mail lib accepte crefidential
+ solve cluster no bistre
+
+ test timeout, which in setImeediate, setTimeout, and process.nextTick().
+ promice in which phase.
