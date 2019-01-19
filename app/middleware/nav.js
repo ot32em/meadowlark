@@ -23,6 +23,7 @@ function navLinks() {
             { 'name': 'Nursery Rhyme', 'link': "/playground/nursery-rhyme", },
             { 'name': 'cookie-test', 'link': "/playground/cookietest", },
             { 'name': '來個錯誤', 'link': "/playground/throw-error",},
+            { 'name': '來個錯誤在 setTimeout', 'link': "/playground/throw-error-in-timeout",},
             { 'name': '關機', 'link': "/playground/close-server",},
         ]},
         { 'name': '連絡我們', 'link': '/contact'},

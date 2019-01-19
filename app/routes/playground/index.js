@@ -63,8 +63,17 @@ app.get('/test', function(req, res) {
 	res.send(req.text);
 });
 
-app.get('/throw-error', function(req, res) {	
+app.get('/throw-error', function(req, res) {
+	res.locals.error = 'throw error...';
 	throw new InternalError('intended to be throwed');	
+});
+
+app.get('/throw-error-in-timeout', function(req, res) {
+	setTimeout(() => {
+		throw new InternalError('intended to be throwed');	
+	}, 1000);
+	res.status(500);
+	res.render('500', {'error': 'throw error in setTimeout(1000)...'});
 });
 app.get('/close-server', function(req, res) {	
 	res.send('closing...');
