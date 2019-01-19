@@ -7,15 +7,24 @@ require('express-handlebars-sections')(handlebars);
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
-
-// add server middlewares
-app.use(require('express-favicon')(__dirname + '/public/img/favicon.ico'));
-let log = require('bole')('app');
-app.use(function (req, res, next) {
-    log.info(`Request(method/url/ajax): [${req.method}][${req.path}][${req.xhr}] ip[${req.ip}]`);
-    next();
-});
-
+let morgan = require('morgan');
+switch (app.get('env'))
+{
+    case 'production':
+        let path = require('path');
+        let config = require('./config/site.js');
+        app.use(morgan('combined', {
+            'stream': require('rotating-file-stream')(config.log.filename, {
+                'interval': config.log.interval, // 1 minute
+                'path': path.join(__dirname, config.log.dir)
+            }),
+        }));
+        break;
+    case 'development':
+    default:
+        app.use(morgan('dev'));
+        break;
+}
 // add app middlewares
 let secret = require('./config/confidential.js').secretCookie;
 app.use(require('cookie-parser')(secret, {'httpOnly': true}));
