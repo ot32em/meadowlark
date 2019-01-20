@@ -7,7 +7,42 @@ require('express-handlebars-sections')(handlebars);
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
+let domain = require('domain');
+app.use(function(req, res, next) {
+    let d = domain.create();
+    d.on('error', function(err) {
+        console.log( process.pid + ' domain err catched');
+
+        setTimeout( () => {
+            console.log('fatal error, safe close process');
+            process.exit(1);
+        }, 10000);
+
+        let cluster = require('cluster');
+        if(cluster.worker)
+            cluster.worker.disconnect();
+        
+        req.socket.server.close();
+
+        try {
+            next(err);
+        } catch(err) {
+            console.log('err got even express error handling');
+            res.status(500);
+            res.render('500', {
+                'error': 'got fatal error',
+            });
+
+        };
+    });
+    d.add(req);
+    d.add(res);
+    d.run(next);
+});
 let morgan = require('morgan');
+morgan.token('pid', function(req, res) {
+    return "pid: " + process.pid;
+});
 switch (app.get('env'))
 {
     case 'production':
@@ -22,7 +57,7 @@ switch (app.get('env'))
         break;
     case 'development':
     default:
-        app.use(morgan('dev'));
+        app.use(morgan(':pid :method :url :status :response-time ms - :res[content-length]'));
         break;
 }
 // add app middlewares
