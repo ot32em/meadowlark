@@ -1,0 +1,21 @@
+<h2>Vacations</h2>
+<div>
+    <table class="table">
+        <tr>
+            <th>name</th>
+            <th>category</th>
+            <th>available</th>
+            <th>price</th>
+            <th>notes</th>
+        </tr>
+        {{#each vacations}}
+            <tr>
+                <td><a href="/vacations/{{slug}}">{{name}}</a></td>
+                <td>{{category}}</td>
+                <td>{{available}}</td>
+                <td>{{price}}</td>
+                <td>{{notes}}</td>
+            </tr>
+        {{/each}}
+    </table>
+</div>

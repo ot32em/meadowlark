@@ -2,7 +2,7 @@ let express = require('express');
 let app = express();
 
 let config = require('./config/site.js');
-let secret = require('./config/confidential.js').secretCookie;
+let secret = require('./config/confidential.js');
 
 // app core
 let handlebars = require('express3-handlebars').create({defaultLayout: 'main'});
@@ -16,14 +16,16 @@ app.use(require('./middleware/customLogger.js')(app.get('env'), config.log));
 
 
 // add app middlewares
-app.use(require('cookie-parser')(secret, {'httpOnly': true}));
+app.use(require('cookie-parser')(secret.secretCookie, {'httpOnly': true}));
 app.use(require('express-session')({
     'resave': false,
     'saveUninitialized': false,
-    'secret':  secret,
+    'secret':  secret.secretCookie,
 }));
 app.use(express.static(__dirname + '/public'));
 app.use(require('body-parser').urlencoded({'extended': true}));
+
+require('./lib/db').connectDb(secret.mongodb[app.get('env')].connectstring);
 
 // add custom middlewares
 app.use(require('./middleware/nav'));

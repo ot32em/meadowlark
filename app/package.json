@@ -19,6 +19,7 @@
     "jshint": "^2.9.7",
     "loadtest": "^3.0.4",
     "minimatch": ">=3.0.2",
+    "mongoose": "^5.4.5",
     "morgan": "^1.9.1",
     "nodemailer": "^5.1.1",
     "rotating-file-stream": "^1.4.0",

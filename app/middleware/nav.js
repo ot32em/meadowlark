@@ -9,8 +9,7 @@ function navLinks() {
             { 'name': 'Taipei', 'link': "/tour/taipei", },
             { 'name': 'Request Group Rate', 'link': "/tour/request-group-rate", },
         ]},
-
-
+        { 'name': 'Vacation', 'link': "/vacations"},
         { 'name': 'Photo Contest', 'links': [
             { 'name': 'Photo Contest', 'link': "/contest/vacation-photo", },
             { 'name': 'Photo Contest Ex', 'link': "/contest/vacation-photo-ex", },
