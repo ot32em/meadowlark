@@ -2,6 +2,10 @@ let cluster = require('cluster');
 
 if(cluster.isMaster) {
     cluster.on("disconnect", worker => {
+        console.log("on disconnect");
+    });
+    cluster.on("exit", worker => {
+        console.log("on process exit");
         cluster.fork();
     });
 
