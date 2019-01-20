@@ -17,6 +17,7 @@
     "express3-handlebars": "^0.5.2",
     "handlebars": "^4.0.12",
     "jshint": "^2.9.7",
+    "loadtest": "^3.0.4",
     "minimatch": ">=3.0.2",
     "morgan": "^1.9.1",
     "nodemailer": "^5.1.1",
