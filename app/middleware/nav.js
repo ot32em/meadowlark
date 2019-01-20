@@ -25,6 +25,7 @@ function navLinks() {
             { 'name': '來個錯誤', 'link': "/playground/throw-error",},
             { 'name': '來個錯誤在 setTimeout', 'link': "/playground/throw-error-in-timeout",},
             { 'name': '關機', 'link': "/playground/close-server",},
+            { 'name': 'Spin', 'link': "/playground/spin/2000",},
         ]},
         { 'name': '連絡我們', 'link': '/contact'},
     ]

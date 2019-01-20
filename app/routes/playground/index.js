@@ -69,12 +69,19 @@ app.get('/throw-error', function(req, res) {
 });
 
 app.get('/throw-error-in-timeout', function(req, res) {
-	setTimeout(() => {
-		throw new InternalError('intended to be throwed');	
-	}, 1000);
-	res.status(500);
-	res.render('500', {'error': 'throw error in setTimeout(1000)...'});
+	process.nextTick(() => {
+		throw new InternalError('intended to be throwed');
+	});
 });
+app.get('/spin/:ms', function(req, res) {
+	let ms = req.params.ms || 1000;
+	let cur = Date.now();
+	while(Date.now() - cur < ms);
+	res.set('Content-Type', 'text/plain');
+	res.send(`spun for ${ms} ms`);
+});
+
+
 app.get('/close-server', function(req, res) {	
 	res.send('closing...');
 	process.exit(1);
