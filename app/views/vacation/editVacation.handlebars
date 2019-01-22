@@ -1,0 +1,17 @@
+<h3><a href="/vacations/{{vacation.slug}}">{{vacation.name}}</a></h3>
+
+<form method="POST" action="/vacations/edit/{{vacation.slug}}">
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label" for="notes" >Note</label>
+        <div class="col-sm-10">
+            <textarea id="notes" name="notes" class="form-control">{{vacation.notes}}</textarea>
+        </div>
+    </div>
+    <div class="m-3">
+        <button type="submit" class="btn btn-info">Save</button>
+    </div>
+</form>
+
+<p class="m-3">
+    <a href="/vacations/{{vacation.slug}}">Back</a>
+</p>

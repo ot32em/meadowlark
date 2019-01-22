@@ -103,4 +103,44 @@ app.get('/:slug', function(req, res) {
     });
 });
 
+
+app.get('/edit/:slug', function(req, res) {
+    if(typeof(req.params.slug) === 'undefined') 
+        return res.status(404).render('404');
+    slug = require('escape-html')(req.params.slug);
+
+    Vacation.findOne({'slug': slug}, function(err, vacation) {
+        if(err || !vacation) 
+            return res.status(404).render('404', {'msg': 'vacation not found'});
+
+        return res.render('vacation/editVacation', {
+            'vacation': SimpleVacationMap(vacation),
+        });
+    });
+});
+
+app.post('/edit/:slug', function(req, res) {
+    if(typeof(req.params.slug) === 'undefined') 
+        return res.status(404).render('404', {'msg': 'null id'});
+    slug = require('escape-html')(req.params.slug);
+
+    console.log('slug: ' + slug);
+    let notes = require('escape-html')(req.body.notes);
+    console.log('note: ' + notes);
+
+    Vacation.findOne({'slug': slug}, function(err, vacation) {
+        if(err || !vacation) 
+            return res.status(404).render('404', {'msg': 'vacation not found'});            
+    
+        vacation.notes = notes;
+        vacation.save(function(err, updatedVacation) {
+            if(err)
+                return res.status(500).render('500', {'msg': 'db internal error'});       
+
+            console.log('updatedVacation note: ' + updatedVacation.notes);
+            res.redirect(303, `/vacations/edit/${vacation.slug}`);
+        });
+    });
+});
+
 module.exports = app;
