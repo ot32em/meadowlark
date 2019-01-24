@@ -67,5 +67,5 @@ chromedriver.exe
 
 .vscode/
 app/public/uploads/
-confidential.js
-config/
+site_env.js
+confidential_env.js
