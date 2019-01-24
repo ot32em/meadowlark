@@ -1,3 +1,4 @@
+let path = require('path');
 let express = require('express');
 let app = express();
 
@@ -5,11 +6,16 @@ let config = require('./config/site.js');
 let secret = require('./config/confidential.js');
 
 // app core
-let handlebars = require('express3-handlebars').create({defaultLayout: 'main'});
+let handlebars = require('express3-handlebars').create({
+    'defaultLayout': 'main',
+    'layoutsDir': path.join(__dirname, 'views/layouts'),
+    'partialsDir': path.join(__dirname, 'views/partials'),
+});
 require('express-handlebars-sections')(handlebars);
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
+app.set('views', path.join(__dirname, 'views/'));
 
 app.use(require('./middleware/customDomain.js'));
 app.use(require('./middleware/customLogger.js')(app.get('env'), config.log));
