@@ -1,27 +1,11 @@
 function readEnv(envKey) {
-    console.log('typeof(process.env[envKey]): ' + typeof(process.env[envKey]));
-
     let val;
-    if(typeof(process.env[envKey]) !== 'undefined') {
-        console.log('env key found ' + envKey);
-        val = process.env[envKey];
-    }
-    else {
-        console.log('env key not found ' + envKey);
+    if(typeof(process.env[envKey]) !== 'undefined') 
+        val = process.env[envKey];    
+    else 
         val = require('./confidential_env')[envKey];
-
-    }
-    console.log('val: ' + val);
     return val;
 }
-
-Object.keys(require('./confidential_env')).map(k => {
-    console.log('file, key: ' + k);
-});
-
-Object.keys(process.env).map(k => {
-    console.log('process env, key: ' + k);
-});
 
 module.exports = {
     'secretCookie': readEnv('CONFIDENTIAL_SECRETCOOKIE'),
