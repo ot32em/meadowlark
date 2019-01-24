@@ -9,6 +9,8 @@ app.get('/', function(req, res) {
 
 let mailSender = require('../../config/confidential').mailsender;
 let admin = require('../../config/site.js').admin;
+let enableMailsender = require('../../config/site.js').mailsender.enable;
+
 
 app.post('/', function(req, res) {
 
@@ -34,6 +36,10 @@ app.post('/', function(req, res) {
 		'usermail': usermail,
 		'layout': null,
 	}, function(err, html) {
+		if(!enableMailsender) {
+			req.session._flash = {'alert': 'warn', 'msg': '郵件已暫停服務'};
+			return res.redirect(303, '/contact');
+		}
 		if(err) {
 			return res.status(500).render('500', {
 				'msg': 'err: ' + err,
