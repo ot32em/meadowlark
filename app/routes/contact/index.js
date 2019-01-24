@@ -35,7 +35,9 @@ app.post('/', function(req, res) {
 		'layout': null,
 	}, function(err, html) {
 		if(err) {
-			return res.send(500, 'internal err');
+			return res.status(500).render('500', {
+				'msg': 'err: ' + err,
+			});
 		}
 		let reply = {
 			'subject': `顧客: ${usermail.name} 回覆: ${usermail.subject}`,
